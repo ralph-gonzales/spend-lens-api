@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.ralphgonzales</groupId>
-    <artifactId>spend-lens</artifactId>
+    <artifactId>spend-lens-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spend-lens</name>
     <description>spend-lens</description>
