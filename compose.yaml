@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: spendlens-postgres
+    environment:
+      - 'POSTGRES_DB=spendlens'
+      - 'POSTGRES_PASSWORD=spendlens'
+      - 'POSTGRES_USER=spendlens'
+    ports:
+      - '5432:5432'
+
