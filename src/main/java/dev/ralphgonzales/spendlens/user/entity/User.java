@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.entity;
+package dev.ralphgonzales.spendlens.user.entity;
 
 import jakarta.persistence.*;
 
