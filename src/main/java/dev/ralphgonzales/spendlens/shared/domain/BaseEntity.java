@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.common;
+package dev.ralphgonzales.spendlens.shared.domain;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

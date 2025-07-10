@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.user.entity;
 
-import dev.ralphgonzales.spendlens.common.BaseEntity;
+import dev.ralphgonzales.spendlens.shared.domain.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
