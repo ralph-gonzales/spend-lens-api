@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.user;
+package dev.ralphgonzales.spendlens.user.repository;
 
 import dev.ralphgonzales.spendlens.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
