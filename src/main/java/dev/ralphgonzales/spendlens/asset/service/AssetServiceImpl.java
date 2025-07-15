@@ -1,12 +1,20 @@
 package dev.ralphgonzales.spendlens.asset.service;
 
 import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
+import dev.ralphgonzales.spendlens.asset.mapper.AssetMapper;
+import dev.ralphgonzales.spendlens.asset.repository.AssetRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class AssetServiceImpl implements AssetService {
+
+    private final AssetRepository assetRepository;
+    private final AssetMapper assetMapper;
+
     @Override
     public AssetDto create(AssetDto dto) {
         return null;
@@ -24,6 +32,6 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public List<AssetDto> findAll() {
-        return List.of();
+        return assetMapper.toListDto(assetRepository.findAll());
     }
 }
