@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AssetMapper {
-    Asset toDto(AssetDto assetDto);
-    AssetDto toEntity(Asset asset);
+    AssetDto toDto(Asset asset);
+    Asset toEntity(AssetDto assetDto);
     List<AssetDto> toListDto(List<Asset> assets);
 }

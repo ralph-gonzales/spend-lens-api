@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.expense.service;
 
 import dev.ralphgonzales.spendlens.expense.dto.ExpenseDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDto> findAll() {
+    public List<ExpenseDto> findAll(Pageable pageable) {
         return List.of();
     }
 }

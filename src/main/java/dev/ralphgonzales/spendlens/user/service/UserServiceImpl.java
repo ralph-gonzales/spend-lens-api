@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.user.service;
 
 import dev.ralphgonzales.spendlens.user.dto.UserDto;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserDto> findAll(Pageable pageable) {
         return List.of();
     }
 }

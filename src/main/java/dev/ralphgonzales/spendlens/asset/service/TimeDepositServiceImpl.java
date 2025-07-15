@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.asset.service;
 
 import dev.ralphgonzales.spendlens.asset.dto.TimeDepositDto;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TimeDepositServiceImpl implements TimeDepositService {
     }
 
     @Override
-    public List<TimeDepositDto> findAll() {
+    public List<TimeDepositDto> findAll(Pageable pageable) {
         return List.of();
     }
 }
