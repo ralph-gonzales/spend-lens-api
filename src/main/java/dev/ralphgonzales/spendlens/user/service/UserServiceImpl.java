@@ -1,9 +1,8 @@
 package dev.ralphgonzales.spendlens.user.service;
 
+import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import dev.ralphgonzales.spendlens.user.dto.UserDto;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -22,7 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAll(Pageable pageable) {
-        return List.of();
+    public PaginatedResponse<UserDto> findAll(Pageable pageable) {
+        return null;
     }
 }

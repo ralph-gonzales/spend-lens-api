@@ -1,14 +1,12 @@
 package dev.ralphgonzales.spendlens.shared.dto;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class PaginatedResponse<T> {
     private List<T> data;
     private int currentPage;

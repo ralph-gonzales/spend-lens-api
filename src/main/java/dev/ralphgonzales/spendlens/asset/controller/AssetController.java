@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/assets")
@@ -20,8 +18,16 @@ public class AssetController {
     private final AssetService assetService;
 
     @GetMapping("/")
-    public ResponseEntity<ApiResponse<List<AssetDto>>> findAll(Pageable pageable) {
-        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), assetService.findAll(pageable)), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<PaginatedResponse<AssetDto>>> findAll(Pageable pageable) {
+        PaginatedResponse<AssetDto> paginated = assetService.findAll(pageable);
+
+        ApiResponse<PaginatedResponse<AssetDto>> response = ApiResponse.<PaginatedResponse<AssetDto>>builder()
+                .statusCode(HttpStatus.OK.value())
+                .statusMessage(HttpStatus.OK.name())
+                .data(paginated)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
