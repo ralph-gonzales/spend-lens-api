@@ -17,8 +17,11 @@ public class AssetController {
 
     private final AssetService assetService;
 
-    @GetMapping("/")
-    public ResponseEntity<ApiResponse<PaginatedResponse<AssetDto>>> findAll(Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<ApiResponse<PaginatedResponse<AssetDto>>> findAll(@RequestParam Integer page,
+                                                                            @RequestParam Integer size,
+                                                                            Pageable pageable) {
+
         PaginatedResponse<AssetDto> paginated = assetService.findAll(pageable);
 
         ApiResponse<PaginatedResponse<AssetDto>> response = ApiResponse.<PaginatedResponse<AssetDto>>builder()
