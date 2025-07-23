@@ -8,33 +8,42 @@ A personalize finance tracking app
 
 ### Tech Stack
 - Backend: Spring Boot
-    - Mapping: MapStruct
-    - DTO: Records
-    - Test: JUnit5 and Mockito
+  - Mapping: MapStruct
+  - DTO: Records
+  - Test: JUnit5 and Mockito
 - Database: PostgreSQL
-    - Development database: Container using Docker Compose
+  - Development database: Container using Docker Compose
 - Frontend: React
 - CI/CD Tool: Jenkins
-- Cloud: AWS
+- Cloud: AWS EC2(IaaS)
 - Mobile: React
 - Code Repository: GitHub
 - Messaging System: Kafka
 
 ### Development Pipeline
 - PHASE 1: Backend Development
-    - Database creation and documentation.
-    - API creation.
-    - Basic CRUD operations/business logic creation.
-    - Test classes creation
+  - Database creation and documentation
+  - API creation
+  - Basic CRUD operations/business logic creation
+  - Validation implementations
+  - Authentication and Security implementation
+  - Test classes creation 
+  - Logging, Comments and Documentation
 - PHASE 2: Frontend Development
+  - Learn React fundamentals
+  - Develop while learning
 - PHASE 3: Deployment
-    - Create application docker images.
-    - Automate deployment and testing using Jenkins pipelines.
-    - Deploy in AWS.
+  - Create application docker images
+  - Deploy in AWS
+  - Automate deployment and testing using Jenkins pipelines
 - PHASE 4: Additional Features Development
-    - Dashboard Feature
-    - Bulk data insertion
-    - Email and SMS Notification implementation
-    - AI assistance/analysis
+  - Dashboard implementation
+  - Bulk data insertion
+  - Export data to PDF/Excel feature
+  - Email and SMS Notification implementation
+  - Caching
+  - News Feed regarding financial news and trends
+  - Utilization of Monitoring tools(e.g. Actuators, Micrometer etc.)
+  - AI assistance/analysis
 - PHASE 5: Mobile Support Development
 - PHASE 6: ScheduleLens App Planning(Microservice implementation)
