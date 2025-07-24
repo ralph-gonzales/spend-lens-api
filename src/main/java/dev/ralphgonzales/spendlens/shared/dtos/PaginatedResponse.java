@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.shared.dto;
+package dev.ralphgonzales.spendlens.shared.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

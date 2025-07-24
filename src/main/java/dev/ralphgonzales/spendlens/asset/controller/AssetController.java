@@ -2,8 +2,8 @@ package dev.ralphgonzales.spendlens.asset.controller;
 
 import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
 import dev.ralphgonzales.spendlens.asset.service.AssetService;
-import dev.ralphgonzales.spendlens.shared.dto.ApiResponse;
-import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dtos.ApiResponse;
+import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

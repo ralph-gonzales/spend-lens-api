@@ -1,6 +1,5 @@
 package dev.ralphgonzales.spendlens.cashflow.entity;
 
-import dev.ralphgonzales.spendlens.shared.domain.BaseEntity;
 import dev.ralphgonzales.spendlens.shared.domain.UserOwnedEntity;
 import jakarta.persistence.*;
 

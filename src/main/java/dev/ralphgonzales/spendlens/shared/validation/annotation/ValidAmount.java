@@ -13,11 +13,11 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@NotNull
-@DecimalMin(value= "0.0")
-@Digits(integer= 10, fraction = 2)
+@NotNull(message = "{common.amount.required}")
+@DecimalMin(value= "0.0", message = "{common.amount.min}")
+@Digits(integer= 10, fraction = 2, message = "{common.amount.digits}")
 public @interface ValidAmount {
-    String message() default "Invalid amount";
+    String message() default "{common.amount.invalid}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

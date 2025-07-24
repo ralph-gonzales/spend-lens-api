@@ -13,14 +13,14 @@ A personalize finance tracking app
   - Test: JUnit5 and Mockito
 - Database: PostgreSQL
   - Development database: Container using Docker Compose
-- Frontend: React
+- Frontend: Angular or React
 - CI/CD Tool: Jenkins
 - Cloud: AWS EC2(IaaS)
 - Mobile: React
 - Code Repository: GitHub
 - Messaging System: Kafka
 
-### Development Pipeline
+### Development Roadmap
 - PHASE 1: Backend Development
   - Database creation and documentation
   - API creation
@@ -45,5 +45,6 @@ A personalize finance tracking app
   - News Feed regarding financial news and trends
   - Utilization of Monitoring tools(e.g. Actuators, Micrometer etc.)
   - AI assistance/analysis
+  - Different Language support(Optional)
 - PHASE 5: Mobile Support Development
 - PHASE 6: ScheduleLens App Planning(Microservice implementation)

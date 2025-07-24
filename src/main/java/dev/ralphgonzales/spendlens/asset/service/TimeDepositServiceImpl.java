@@ -1,7 +1,7 @@
 package dev.ralphgonzales.spendlens.asset.service;
 
 import dev.ralphgonzales.spendlens.asset.dto.TimeDepositDto;
-import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 
 public class TimeDepositServiceImpl implements TimeDepositService {

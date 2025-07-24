@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.user.service;
 
-import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
 import dev.ralphgonzales.spendlens.user.dto.UserDto;
 import org.springframework.data.domain.Pageable;
 

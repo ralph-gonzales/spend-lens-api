@@ -1,5 +1,6 @@
 package dev.ralphgonzales.spendlens.asset.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import dev.ralphgonzales.spendlens.shared.validation.annotation.ValidAmount;
 import jakarta.validation.constraints.*;
@@ -8,16 +9,23 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record AssetDto(
-        @Null(groups = ValidationGroups.Create.class)
-        @NotNull(groups = ValidationGroups.Update.class)
+        @Null(groups = ValidationGroups.Create.class, message = "{asset.id.null}")
+        @NotNull(groups = ValidationGroups.Update.class, message = "{asset.id.required}")
+        @Positive(groups = ValidationGroups.Update.class, message = "{asset.id.positive}")
         Long id,
-        @NotNull
+
+        @NotNull(message="{asset.assetDate.required}")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,
-        @NotNull
+
+        @NotNull(message="{asset.assetTypeCode.required}")
         String assetTypeCode,
+
         Long bankId,
+
         @ValidAmount
         BigDecimal amount,
+
         @NotNull
         Long userId
 ) { }
