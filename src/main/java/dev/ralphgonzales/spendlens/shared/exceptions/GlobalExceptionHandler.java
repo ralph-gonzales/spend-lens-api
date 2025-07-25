@@ -9,10 +9,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,12 +41,30 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleJsonParseError(HttpMessageNotReadableException ex, HttpServletRequest request) {
+        Map<String, String> errors = new HashMap<>();
+        Throwable rootCause = ex.getMostSpecificCause();
+
+        if(rootCause instanceof DateTimeParseException) {
+            errors.put(ErrorMessages.DATE_FIELD, messageSource.getMessage(ErrorMessages.DATE_KEY, null, LocaleContextHolder.getLocale()));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .path(request.getRequestURI())
+                .timestamp(Instant.now())
+                .message(messageSource.getMessage(ErrorMessages.FORMAT_ERROR_KEY, null, LocaleContextHolder.getLocale()))
+                .errors(errors)
+                .build());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .path(request.getRequestURI())
-                .message(messageSource.getMessage(ErrorMessages.UNEXPECTED_ERROR,null, LocaleContextHolder.getLocale()))
+                .message(messageSource.getMessage(ErrorMessages.UNEXPECTED_ERROR_KEY,null, LocaleContextHolder.getLocale()))
                 .timestamp(Instant.now())
                 .build());
     }
