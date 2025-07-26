@@ -1,7 +1,7 @@
 package dev.ralphgonzales.spendlens.expense.service;
 
 import dev.ralphgonzales.spendlens.expense.dto.ExpenseDto;
-import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

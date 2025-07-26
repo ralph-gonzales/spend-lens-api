@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.shared.service;
 
-import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 
 public interface CrudService<D> {

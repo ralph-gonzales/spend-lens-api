@@ -1,7 +1,7 @@
 package dev.ralphgonzales.spendlens.shared.exceptions;
 
 import dev.ralphgonzales.spendlens.shared.constants.ErrorMessages;
-import dev.ralphgonzales.spendlens.shared.dtos.ErrorResponse;
+import dev.ralphgonzales.spendlens.shared.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;

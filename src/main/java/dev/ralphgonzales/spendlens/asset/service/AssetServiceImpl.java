@@ -4,7 +4,7 @@ import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
 import dev.ralphgonzales.spendlens.asset.entity.Asset;
 import dev.ralphgonzales.spendlens.asset.mapper.AssetMapper;
 import dev.ralphgonzales.spendlens.asset.repository.AssetRepository;
-import dev.ralphgonzales.spendlens.shared.dtos.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
