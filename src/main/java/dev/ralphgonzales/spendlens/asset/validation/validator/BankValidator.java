@@ -1,13 +1,11 @@
-package dev.ralphgonzales.spendlens.shared.validation.validator;
+package dev.ralphgonzales.spendlens.asset.validation.validator;
 
 import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
 import dev.ralphgonzales.spendlens.shared.enums.AssetType;
-import dev.ralphgonzales.spendlens.shared.validation.annotation.ValidBank;
+import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
 
     static final String BANK_ID_FIELD = "bankId";

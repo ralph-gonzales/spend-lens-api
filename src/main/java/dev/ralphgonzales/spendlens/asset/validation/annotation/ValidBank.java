@@ -1,6 +1,6 @@
-package dev.ralphgonzales.spendlens.shared.validation.annotation;
+package dev.ralphgonzales.spendlens.asset.validation.annotation;
 
-import dev.ralphgonzales.spendlens.shared.validation.validator.BankValidator;
+import dev.ralphgonzales.spendlens.asset.validation.validator.BankValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

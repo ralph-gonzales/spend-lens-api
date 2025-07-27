@@ -3,6 +3,8 @@ package dev.ralphgonzales.spendlens.shared.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 @AllArgsConstructor
 public enum AssetType {
@@ -13,6 +15,13 @@ public enum AssetType {
     private final String name;
 
     public static boolean isBank(String code){
-        return code.equalsIgnoreCase(BANK.getCode());
+        return BANK.getCode().equalsIgnoreCase(code);
+    }
+
+    public static AssetType fromCode(String code){
+        return Arrays.stream(values())
+                .filter(type->type.code.equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("Invalid assetTypeCode: " + code));
     }
 }

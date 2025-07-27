@@ -36,7 +36,8 @@ public class AssetController {
     }
 
     @PostMapping
-    public ResponseEntity<PaginatedResponse<ApiResponse<AssetDto>>> save(@Validated(ValidationGroups.Create.class) @RequestBody AssetDto assetDto) {
+    public ResponseEntity<PaginatedResponse<ApiResponse<AssetDto>>> save(@Validated(ValidationGroups.Create.class)
+                                                                             @RequestBody AssetDto assetDto) {
         return null;
     }
 }
