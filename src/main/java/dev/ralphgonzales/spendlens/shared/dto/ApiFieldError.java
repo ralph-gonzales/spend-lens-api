@@ -5,17 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ErrorResponse {
-    private int status;
-    private String path;
-    private Instant timestamp;
+public class ApiFieldError {
+    private String field;
     private String message;
-    private List<ApiFieldError> errors;
 }

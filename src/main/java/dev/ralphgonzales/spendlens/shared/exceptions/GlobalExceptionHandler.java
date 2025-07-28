@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.shared.exceptions;
 
 import dev.ralphgonzales.spendlens.shared.constants.ErrorMessages;
+import dev.ralphgonzales.spendlens.shared.dto.ApiFieldError;
 import dev.ralphgonzales.spendlens.shared.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -26,11 +27,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolations(ConstraintViolationException ex, HttpServletRequest request) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getConstraintViolations().forEach(violation -> {
-            String field = violation.getPropertyPath().toString();
-            errors.put(field, violation.getMessage());
-        });
+        List<ApiFieldError> errors = ex.getConstraintViolations().stream()
+                        .map(violation-> ApiFieldError.builder()
+                                .field(violation.getPropertyPath().toString())
+                                .message(violation.getMessage())
+                                .build())
+                        .toList();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -43,11 +45,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleJsonParseError(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        Map<String, String> errors = new HashMap<>();
+        List<ApiFieldError> errors = new ArrayList<>();
         Throwable rootCause = ex.getMostSpecificCause();
 
         if(rootCause instanceof DateTimeParseException) {
-            errors.put(ErrorMessages.DATE_FIELD, messageSource.getMessage(ErrorMessages.DATE_KEY, null, LocaleContextHolder.getLocale()));
+            errors.add(ApiFieldError.builder()
+                    .field(ErrorMessages.DATE_FIELD)
+                    .message(messageSource.getMessage(ErrorMessages.DATE_KEY, null, LocaleContextHolder.getLocale())).build());
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
