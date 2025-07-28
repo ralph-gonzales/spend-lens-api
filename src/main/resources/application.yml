@@ -1,3 +1,14 @@
 spring:
     application:
-        name: spend-lens
+        name: spend-lens-api
+
+validation:
+    amount:
+        min: 0.00
+        digits:
+            integer: 10
+            fraction: 2
+    date:
+        format: yyyy-MM-dd
+
+

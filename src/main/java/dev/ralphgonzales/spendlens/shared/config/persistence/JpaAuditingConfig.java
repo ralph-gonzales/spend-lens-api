@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.shared.config;
+package dev.ralphgonzales.spendlens.shared.config.persistence;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
