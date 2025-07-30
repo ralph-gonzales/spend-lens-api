@@ -25,4 +25,8 @@ public class AssetValidator {
             case BANK -> assetRepository.existsByBankIdAndAssetDateBetween(assetDto.bankId(), startDate,endDate);
         };
     }
+
+    private boolean isBankExist(AssetDto assetDto){
+        return false;
+    }
 }

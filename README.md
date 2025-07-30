@@ -40,8 +40,9 @@ A personalize finance tracking app
   - Dashboard implementation
   - Bulk data insertion
   - Export data to PDF/Excel feature
+  - Admin Configuration Page
   - Email and SMS Notification implementation
-  - Caching
+  - Caching(Lookup Data, Search Results, Third-Party API Responses, etc.)
   - News Feed regarding financial news and trends
   - Utilization of Monitoring tools(e.g. Actuators, Micrometer etc.)
   - AI assistance/analysis
