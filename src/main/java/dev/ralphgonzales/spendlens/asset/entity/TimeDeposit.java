@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "time_deposits")
 public class TimeDeposit extends UserOwnedEntity {
     private Long bankId;
     private LocalDateTime maturityDate;

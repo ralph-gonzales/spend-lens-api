@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "expenses")
 public class Expense extends UserOwnedEntity {
     private String expenseName;
     private LocalDate expenseDate;

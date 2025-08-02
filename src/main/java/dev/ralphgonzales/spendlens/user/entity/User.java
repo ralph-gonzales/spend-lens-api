@@ -4,7 +4,6 @@ import dev.ralphgonzales.spendlens.shared.domain.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="users")
 public class User extends BaseEntity {
     private String username;
     private String password;

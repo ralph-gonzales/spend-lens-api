@@ -1,3 +1,0 @@
-ALTER TABLE spend_lens.banks
-ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN is_enabled BOOLEAN NOT NULL DEFAULT true;

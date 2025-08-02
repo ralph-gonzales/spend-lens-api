@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "assets")
 public class Asset extends UserOwnedEntity {
     private LocalDate assetDate;
     private String assetTypeCode;
