@@ -8,4 +8,5 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    private String name;
 }

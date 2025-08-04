@@ -2,7 +2,7 @@ package dev.ralphgonzales.spendlens.asset.validation.validator;
 
 import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
 import dev.ralphgonzales.spendlens.shared.constants.ErrorMessages;
-import dev.ralphgonzales.spendlens.shared.enums.AssetType;
+import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -26,7 +26,7 @@ public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
 
     @Override
     public boolean isValid(AssetDto assetDto, ConstraintValidatorContext constraintValidatorContext) {
-        if(AssetType.isBank(assetDto.assetTypeCode()) && assetDto.bankId() == null){
+        if(AssetType.BANK == assetDto.assetType() && assetDto.bankId() == null){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(message)
                     .addPropertyNode(BANK_ID_FIELD)

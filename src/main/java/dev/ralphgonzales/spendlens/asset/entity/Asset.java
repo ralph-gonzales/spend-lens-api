@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.asset.entity;
 
-import dev.ralphgonzales.spendlens.shared.domain.BaseEntity;
+import dev.ralphgonzales.spendlens.asset.enums.AssetType;
+import dev.ralphgonzales.spendlens.shared.domain.Bank;
 import dev.ralphgonzales.spendlens.shared.domain.UserOwnedEntity;
 import jakarta.persistence.*;
 
@@ -10,8 +11,10 @@ import java.time.LocalDate;
 @Entity
 public class Asset extends UserOwnedEntity {
     private LocalDate assetDate;
-    private String assetTypeCode;
-    private Long bankId;
+    private AssetType assetType;
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
     private BigDecimal amount;
     private Long userId;
     private Boolean isActive;

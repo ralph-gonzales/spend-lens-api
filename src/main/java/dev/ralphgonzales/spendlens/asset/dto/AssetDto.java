@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.asset.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import dev.ralphgonzales.spendlens.shared.validation.annotation.ValidAmount;
@@ -21,7 +22,7 @@ public record AssetDto(
         LocalDate assetDate,
 
         @NotNull(message="{asset.assetTypeCode.required}")
-        String assetTypeCode,
+        AssetType assetType,
 
         Long bankId,
 
