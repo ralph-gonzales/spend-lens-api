@@ -1,9 +1,9 @@
 package dev.ralphgonzales.spendlens.asset.validation.validator;
 
 import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
-import dev.ralphgonzales.spendlens.shared.constants.ErrorMessages;
 import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
+import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
         if(assetDto.bankId() < 0 ){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
-                    messageSource.getMessage(ErrorMessages.INVALID_BANK_KEY,null, LocaleContextHolder.getLocale()))
+                    messageSource.getMessage(CommonErrorCode.INVALID_BANK_ID.getMessageKey(),null, LocaleContextHolder.getLocale()))
                     .addPropertyNode(BANK_ID_FIELD)
                     .addConstraintViolation();
             return false;

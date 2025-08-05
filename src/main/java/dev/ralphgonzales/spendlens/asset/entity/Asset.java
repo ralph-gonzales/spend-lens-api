@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 public class Asset extends UserOwnedEntity {
     private LocalDate assetDate;
+    @Enumerated(EnumType.STRING)
     private AssetType assetType;
     @ManyToOne
     @JoinColumn(name = "bank_id")

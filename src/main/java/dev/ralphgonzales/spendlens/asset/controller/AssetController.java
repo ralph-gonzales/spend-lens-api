@@ -25,12 +25,10 @@ public class AssetController {
                                                                             Pageable pageable) {
 
         PaginatedResponse<AssetDto> paginated = assetService.findAll(pageable);
-
-        ApiResponse<PaginatedResponse<AssetDto>> response = ApiResponse.<PaginatedResponse<AssetDto>>builder()
-                .statusCode(HttpStatus.OK.value())
-                .statusMessage(HttpStatus.OK.name())
-                .data(paginated)
-                .build();
+        ApiResponse<PaginatedResponse<AssetDto>> response = new ApiResponse<>(
+                HttpStatus.OK.value(),
+                paginated
+        );
 
         return ResponseEntity.ok(response);
     }

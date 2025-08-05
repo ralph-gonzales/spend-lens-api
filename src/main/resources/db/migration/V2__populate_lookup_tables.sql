@@ -2,7 +2,7 @@ INSERT INTO spend_lens.role_type (code,name) VALUES
     ('USER','user'),
     ('ADMIN','admin');
 
-INSERT INTO spend_lens.cash_flow_type (code,name) VALUES
+INSERT INTO spend_lens.cashflow_type (code,name) VALUES
     ('SALARY', 'Salary'),
     ('SAVINGS_INTEREST', 'Savings Interest'),
     ('DEBT','Debt'),

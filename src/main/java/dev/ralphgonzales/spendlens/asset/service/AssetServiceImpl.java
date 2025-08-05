@@ -36,14 +36,13 @@ public class AssetServiceImpl implements AssetService {
     public PaginatedResponse<AssetDto> findAll(Pageable pageable) {
         Page<Asset> page = assetRepository.findAll(pageable);
 
-        return PaginatedResponse.<AssetDto>builder()
-                .data(assetMapper.toListDto(page.getContent()))
-                .currentPage(page.getNumber())
-                .isLast(page.isLast())
-                .pageSize(page.getSize())
-                .totalElements(page.getTotalElements())
-                .totalPages(page.getTotalPages())
-                .isLast(page.isLast())
-                .build();
+        return new PaginatedResponse<>(
+                assetMapper.toListDto(page.getContent()),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 }

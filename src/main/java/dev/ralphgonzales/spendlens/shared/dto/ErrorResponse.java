@@ -1,21 +1,16 @@
 package dev.ralphgonzales.spendlens.shared.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.Instant;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class ErrorResponse {
-    private int status;
-    private String path;
-    private Instant timestamp;
-    private String message;
-    private List<ApiFieldError> errors;
-}
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public record ErrorResponse(
+        int status,
+        String path,
+        Instant timestamp,
+        String code,
+        String message,
+        List<ApiFieldError> errors
+) { }

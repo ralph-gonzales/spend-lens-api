@@ -1,21 +1,15 @@
 package dev.ralphgonzales.spendlens.shared.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class PaginatedResponse<T> {
-    private List<T> data;
-    private int currentPage;
-    private int pageSize;
-    private long totalElements;
-    private int totalPages;
-    private boolean isLast;
-}
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public record PaginatedResponse<T> (
+    List<T> data,
+    int currentPage,
+    int pageSize,
+    long totalElements,
+    int totalPages,
+    boolean isLast
+){ }
