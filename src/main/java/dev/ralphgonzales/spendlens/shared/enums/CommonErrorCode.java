@@ -1,6 +1,5 @@
 package dev.ralphgonzales.spendlens.shared.enums;
 
-import dev.ralphgonzales.spendlens.shared.exceptions.BaseResponseCode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 

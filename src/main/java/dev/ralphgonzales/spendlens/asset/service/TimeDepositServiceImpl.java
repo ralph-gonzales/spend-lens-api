@@ -16,7 +16,12 @@ public class TimeDepositServiceImpl implements TimeDepositService {
     }
 
     @Override
-    public void delete(TimeDepositDto dto) {
+    public TimeDepositDto getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
 
     }
 

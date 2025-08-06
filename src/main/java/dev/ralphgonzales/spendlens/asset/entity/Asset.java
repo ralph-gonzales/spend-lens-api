@@ -13,7 +13,7 @@ public class Asset extends UserOwnedEntity {
     private LocalDate assetDate;
     @Enumerated(EnumType.STRING)
     private AssetType assetType;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
     private Bank bank;
     private BigDecimal amount;

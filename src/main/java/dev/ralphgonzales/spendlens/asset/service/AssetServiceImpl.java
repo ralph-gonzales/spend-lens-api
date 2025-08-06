@@ -28,7 +28,10 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public void delete(AssetDto dto) {
+    public AssetDto getById(Long id) { return null;}
+
+    @Override
+    public void delete(Long id) {
 
     }
 

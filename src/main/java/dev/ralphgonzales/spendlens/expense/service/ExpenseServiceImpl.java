@@ -18,7 +18,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void delete(ExpenseDto dto) {
+    public ExpenseDto getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
 
     }
 

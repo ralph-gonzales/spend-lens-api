@@ -1,4 +1,4 @@
-package dev.ralphgonzales.spendlens.shared.exceptions;
+package dev.ralphgonzales.spendlens.shared.enums;
 
 import org.springframework.http.HttpStatus;
 

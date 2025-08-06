@@ -16,19 +16,14 @@ public record AssetDto(
         @NotNull(groups = ValidationGroups.Update.class, message = "{asset.id.required}")
         @Positive(groups = ValidationGroups.Update.class, message = "{asset.id.positive}")
         Long id,
-
         @NotNull(message="{asset.assetDate.required}")
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,
-
         @NotNull(message="{asset.assetTypeCode.required}")
         AssetType assetType,
-
         Long bankId,
-
         @ValidAmount
         BigDecimal amount,
-
         @NotNull(message="{common.userId.required}")
         Long userId
 ) { }

@@ -18,7 +18,12 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     @Override
-    public void delete(CashFlowDto dto) {
+    public CashFlowDto getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
 
     }
 

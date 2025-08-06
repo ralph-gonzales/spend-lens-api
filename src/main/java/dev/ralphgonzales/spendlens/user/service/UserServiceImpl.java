@@ -16,7 +16,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(UserDto dto) {
+    public UserDto getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
 
     }
 
