@@ -34,7 +34,7 @@ public class AssetController {
                 paginated
         );
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(CommonSuccessCode.RESOURCE_FETCHED.getStatus()).body(response);
     }
 
     @PostMapping
@@ -44,7 +44,7 @@ public class AssetController {
         // TODO: add buildAndExpand value
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/{id}")
                 .buildAndExpand("")
                 .toUri();
 

@@ -43,9 +43,10 @@ A personalize finance tracking app
   - Admin Configuration Page
   - Email and SMS Notification implementation
   - Caching(Lookup Data, Search Results, Third-Party API Responses, etc.)
+  - Implement Elasticsearch
   - News Feed regarding financial news and trends
   - Utilization of Monitoring tools(e.g. Actuators, Micrometer etc.)
   - AI assistance/analysis
   - Different Language support(Optional)
 - PHASE 5: Mobile Support Development
-- PHASE 6: ScheduleLens App Planning(Microservice implementation)
+- PHASE 6: Microservice migration
