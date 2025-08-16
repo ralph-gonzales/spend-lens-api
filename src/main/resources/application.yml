@@ -1,3 +1,57 @@
 spring:
     application:
         name: spend-lens-api
+
+app:
+    # Abbreviations:
+    # - cft = cash_flow_type
+    # - cf  = cash_flow
+    # - ec  = expense_category
+    # - td  = time_deposit
+    # - *_normalized = normalized/generated column used for uniqueness
+    # - *active_only = usually a partial unique (e.g., WHERE active)
+    db-constraints:
+        app-user:
+            fk_app_user__role_type:
+            ck_app_user__email_format_valid:
+            uq_app_user__email_normalized__active_only:
+        cash-flow:
+            fk_app_user_cash_flow_type__app_user:
+            uq_app_user_cft__user__name_normalized:
+            fk_app_user_cash_flow__app_user:
+            ck_app_user_cash_flow__amount_bounds:
+            ck_app_user_cash_flow__amount_decimal_scale:
+            uq_app_user_cf__user__date__desc__active_only:
+            fk_app_user_cash_flow_type_map__app_user_cash_flow:
+            fk_app_user_cash_flow_type_map__app_user_cft:
+            uq_app_user_cft_map__au_cf_id__au_cft_id:
+            uq_cft_template__name_normalized__active_only:
+        bank:
+            uq_bank__name__active_only:
+        asset:
+            fk_app_user_asset__app_user:
+            fk_app_user_asset__asset_type:
+            fk_app_user_asset__bank: INVALID_BANK_ID
+            ck_app_user_asset__amount_valid:
+            ck_app_user_asset__amount_decimal_valid:
+            uq_asset__user__month__type__bank__active_only: ASSET_DUPLICATE_RECORD
+        expense:
+            fk_app_user_expense_category__app_user:
+            uq_expense_category_template__name__active_only:
+            fk_app_user_expense__payment_type:
+            fk_app_user_expense__app_user:
+            ck_app_user_expense__amount_bounds:
+            ck_app_user_expense__amount_decimal_scale:
+            uq_app_user_expense__user__name__date__active_only:
+            fk_app_user_expense_category_map__app_user_expense:
+            fk_app_user_expense_category_map__app_user_ec:
+            fk_app_user_expense_category_map__app_user_ec_type:
+            uq_app_user_ec_map__expense_id__ec_id:
+        time-deposit:
+            fk_app_user_time_deposit__bank:
+            fk_app_user_time_deposit__app_user:
+            ck_app_user_time_deposit__amount_bounds:
+            ck_app_user_time_deposit__amount_decimal_scale:
+            uq_app_user_td__user__bank__date__active_only:
+        other:
+            default:

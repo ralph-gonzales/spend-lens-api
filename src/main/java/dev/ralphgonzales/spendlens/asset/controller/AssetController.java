@@ -38,16 +38,22 @@ public class AssetController {
     }
 
     @PostMapping
-    public ResponseEntity<PaginatedResponse<ApiResponse<AssetDto>>> save(@Validated(ValidationGroups.Create.class)
+    public ResponseEntity<ApiResponse<AssetDto>> save(@Validated(ValidationGroups.Create.class)
                                                                              @RequestBody AssetDto assetDto) {
 
-        // TODO: add buildAndExpand value
+        AssetDto saved = assetService.create(assetDto);
+        ApiResponse<AssetDto> response = new ApiResponse<>(
+                CommonSuccessCode.RESOURCE_CREATED.getCode(),
+                messageSource.getMessage(CommonSuccessCode.RESOURCE_CREATED.getMessageKey(),null,LocaleContextHolder.getLocale()),
+                saved
+        );
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand("")
+                .buildAndExpand(saved.id())
                 .toUri();
 
-        return null;
+        return ResponseEntity.created(location).body(response);
     }
 }

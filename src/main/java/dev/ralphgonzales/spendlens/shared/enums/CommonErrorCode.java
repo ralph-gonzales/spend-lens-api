@@ -5,11 +5,16 @@ import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 public enum CommonErrorCode implements BaseResponseCode {
+    // Asset
     ASSET_DUPLICATE_RECORD("ASSET_DUPLICATE_RECORD","asset.record.duplicate",HttpStatus.BAD_REQUEST),
+
+    // Bank
+    INVALID_BANK_ID("INVALID_BANK_ID", "common.bankId.invalid", HttpStatus.BAD_REQUEST),
+
+    // Common
     UNEXPECTED_ERROR("UNEXPECTED_ERROR", "error.unexpected", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_JSON_FORMAT("INVALID_JSON_FORMAT", "error.format", HttpStatus.BAD_REQUEST),
     INVALID_DATE_FORMAT("INVALID_DATE_FORMAT", "common.date.format", HttpStatus.BAD_REQUEST),
-    INVALID_BANK_ID("INVALID_BANK_ID", "common.bankId.invalid", HttpStatus.BAD_REQUEST),
     FIELD_VALIDATION_FAILED("FIELD_VALIDATION_FAILED", "common.field.failed", HttpStatus.BAD_REQUEST);
 
     private final String code;
