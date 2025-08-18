@@ -37,7 +37,7 @@ public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
         if(assetDto.bankId() < 0 ){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
-                    messageSource.getMessage(CommonErrorCode.INVALID_BANK_ID.getMessageKey(),null, LocaleContextHolder.getLocale()))
+                    messageSource.getMessage(CommonErrorCode.BANK_ID_INVALID.getMessageKey(),null, LocaleContextHolder.getLocale()))
                     .addPropertyNode(BANK_ID_FIELD)
                     .addConstraintViolation();
             return false;

@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
                 CommonErrorCode.FIELD_VALIDATION_FAILED.getStatus().value(),
                 request.getRequestURI(),
                 Instant.now(),
-                CommonErrorCode.INVALID_DATE_FORMAT.getCode(),
+                CommonErrorCode.DATE_INVALID_FORMAT.getCode(),
                 messageSource.getMessage(CommonErrorCode.FIELD_VALIDATION_FAILED.getMessageKey(),null,LocaleContextHolder.getLocale()),
                 errors)
         );
@@ -46,22 +46,22 @@ public class GlobalExceptionHandler {
         Throwable rootCause = ex.getMostSpecificCause();
 
         if(rootCause instanceof DateTimeParseException) {
-            return ResponseEntity.status(CommonErrorCode.INVALID_DATE_FORMAT.getStatus()).body(new ErrorResponse(
-                    CommonErrorCode.INVALID_DATE_FORMAT.getStatus().value(),
+            return ResponseEntity.status(CommonErrorCode.DATE_INVALID_FORMAT.getStatus()).body(new ErrorResponse(
+                    CommonErrorCode.DATE_INVALID_FORMAT.getStatus().value(),
                     request.getRequestURI(),
                     Instant.now(),
-                    CommonErrorCode.INVALID_DATE_FORMAT.getCode(),
-                    messageSource.getMessage(CommonErrorCode.INVALID_DATE_FORMAT.getMessageKey(),null,LocaleContextHolder.getLocale()),
+                    CommonErrorCode.DATE_INVALID_FORMAT.getCode(),
+                    messageSource.getMessage(CommonErrorCode.DATE_INVALID_FORMAT.getMessageKey(),null,LocaleContextHolder.getLocale()),
                     null)
             );
         }
 
-        return ResponseEntity.status(CommonErrorCode.INVALID_JSON_FORMAT.getStatus()).body(new ErrorResponse(
-                CommonErrorCode.INVALID_JSON_FORMAT.getStatus().value(),
+        return ResponseEntity.status(CommonErrorCode.JSON_INVALID_FORMAT.getStatus()).body(new ErrorResponse(
+                CommonErrorCode.JSON_INVALID_FORMAT.getStatus().value(),
                 request.getRequestURI(),
                 Instant.now(),
-                CommonErrorCode.INVALID_JSON_FORMAT.getCode(),
-                messageSource.getMessage(CommonErrorCode.INVALID_JSON_FORMAT.getMessageKey(), null, LocaleContextHolder.getLocale()),
+                CommonErrorCode.JSON_INVALID_FORMAT.getCode(),
+                messageSource.getMessage(CommonErrorCode.JSON_INVALID_FORMAT.getMessageKey(), null, LocaleContextHolder.getLocale()),
                 null)
         );
     }

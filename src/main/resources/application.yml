@@ -29,12 +29,12 @@ app:
         bank:
             uq_bank__name__active_only:
         asset:
-            fk_app_user_asset__app_user:
-            fk_app_user_asset__asset_type:
-            fk_app_user_asset__bank: INVALID_BANK_ID
-            ck_app_user_asset__amount_valid:
-            ck_app_user_asset__amount_decimal_valid:
-            uq_asset__user__month__type__bank__active_only: ASSET_DUPLICATE_RECORD
+            fk_app_user_asset__app_user: CON_409_COMMON_001
+            fk_app_user_asset__asset_type: CON_409_ASSET_001
+            fk_app_user_asset__bank: ERR_400_BANK_001
+            ck_app_user_asset__amount_valid: CON_409_COMMON_002
+            ck_app_user_asset__amount_decimal_valid: CON_409_COMMON_002
+            uq_asset__user__month__type__bank__active_only: ERR_400_ASSET_001
         expense:
             fk_app_user_expense_category__app_user:
             uq_expense_category_template__name__active_only:
