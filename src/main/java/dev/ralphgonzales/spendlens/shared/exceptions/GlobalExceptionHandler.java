@@ -54,6 +54,15 @@ public class GlobalExceptionHandler {
                     messageSource.getMessage(CommonErrorCode.DATE_INVALID_FORMAT.getMessageKey(),null,LocaleContextHolder.getLocale()),
                     null)
             );
+        } else if(rootCause instanceof InvalidEnumException e){
+            return ResponseEntity.status(e.getStatus()).body(new ErrorResponse(
+                    e.getStatus().value(),
+                    request.getRequestURI(),
+                    Instant.now(),
+                    e.getCode(),
+                    messageSource.getMessage(e.getMessage(),null,LocaleContextHolder.getLocale()),
+                    null)
+            );
         }
 
         return ResponseEntity.status(CommonErrorCode.JSON_INVALID_FORMAT.getStatus()).body(new ErrorResponse(
