@@ -1,9 +1,12 @@
-package dev.ralphgonzales.spendlens.shared.repository;
+package dev.ralphgonzales.spendlens.bank.repository;
 
-import dev.ralphgonzales.spendlens.shared.domain.Bank;
+import dev.ralphgonzales.spendlens.bank.entity.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long> {
+    List<Bank> findByActiveTrue();
 }
