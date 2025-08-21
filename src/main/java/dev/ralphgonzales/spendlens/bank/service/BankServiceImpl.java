@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +45,7 @@ public class BankServiceImpl implements BankService{
 
     @Cacheable(value = "banks", key = "'allActiveBanks'")
     @Override
-    public List<BankDto> getAllActiveBanks(){
-        return bankMapper.toDtos(bankRepository.findByActiveTrue());
+    public Set<Long> getAllActiveBanks(){
+        return bankRepository.findIdsByActiveTrue();
     }
 }
