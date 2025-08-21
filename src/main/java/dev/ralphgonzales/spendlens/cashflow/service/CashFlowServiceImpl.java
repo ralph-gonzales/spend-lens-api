@@ -13,7 +13,7 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     @Override
-    public CashFlowDto update(CashFlowDto dto) {
+    public CashFlowDto update(CashFlowDto dto, Long id) {
         return null;
     }
 

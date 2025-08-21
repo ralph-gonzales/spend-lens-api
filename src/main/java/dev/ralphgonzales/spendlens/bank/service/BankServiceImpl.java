@@ -1,7 +1,6 @@
 package dev.ralphgonzales.spendlens.bank.service;
 
 import dev.ralphgonzales.spendlens.bank.dto.BankDto;
-import dev.ralphgonzales.spendlens.bank.mapper.BankMapper;
 import dev.ralphgonzales.spendlens.bank.repository.BankRepository;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import java.util.Set;
 public class BankServiceImpl implements BankService{
 
     private final BankRepository bankRepository;
-    private final BankMapper bankMapper;
 
     @Override
     public BankDto create(BankDto dto) {
@@ -24,7 +22,7 @@ public class BankServiceImpl implements BankService{
     }
 
     @Override
-    public BankDto update(BankDto dto) {
+    public BankDto update(BankDto dto, Long id) {
         return null;
     }
 

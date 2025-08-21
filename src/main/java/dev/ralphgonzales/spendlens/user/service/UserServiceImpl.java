@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto update(UserDto dto) {
+    public UserDto update(UserDto dto, Long id) {
         return null;
     }
 

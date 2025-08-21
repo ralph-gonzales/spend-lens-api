@@ -13,7 +13,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public ExpenseDto update(ExpenseDto dto) {
+    public ExpenseDto update(ExpenseDto dto, Long id) {
         return null;
     }
 

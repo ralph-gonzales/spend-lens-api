@@ -33,7 +33,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetDto update(AssetDto dto) {
+    public AssetDto update(AssetDto dto, Long id) {
         return null;
     }
 

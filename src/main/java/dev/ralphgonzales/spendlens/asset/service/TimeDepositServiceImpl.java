@@ -11,7 +11,7 @@ public class TimeDepositServiceImpl implements TimeDepositService {
     }
 
     @Override
-    public TimeDepositDto update(TimeDepositDto dto) {
+    public TimeDepositDto update(TimeDepositDto dto, Long id) {
         return null;
     }
 
