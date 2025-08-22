@@ -2,6 +2,7 @@ package dev.ralphgonzales.spendlens.shared.domain;
 
 import jakarta.persistence.*;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -37,5 +38,19 @@ public abstract class BaseEntity {
 
     public void deactivate() {
         this.isActive = false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null) return false;
+        if(Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BaseEntity other = (BaseEntity) o;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode(){
+        return Hibernate.getClass(this).hashCode();
     }
 }

@@ -20,6 +20,7 @@ public record AssetDto(
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,
         @NotNull(message="{asset.assetTypeCode.required}")
+        @Size(max=10, message = "{asset.assetTypeCode.length}")
         AssetType assetType,
         Long bankId,
         @ValidAmount

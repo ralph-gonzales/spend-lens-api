@@ -2,7 +2,9 @@ package dev.ralphgonzales.spendlens.shared.persistence.jpa;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public class SpecificationUtil {
+public final class SpecificationUtil {
+
+    private SpecificationUtil(){}
 
     public static <T> Specification<T> and(Specification<T> base, Specification<T> other) {
         return base == null ? other : base.and(other);
