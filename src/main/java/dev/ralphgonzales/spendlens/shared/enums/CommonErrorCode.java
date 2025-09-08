@@ -18,9 +18,11 @@ public enum CommonErrorCode implements BaseResponseCode {
     JSON_INVALID_FORMAT("ERR_400_COMMON_001", "error.format", HttpStatus.BAD_REQUEST),
     DATE_INVALID_FORMAT("ERR_400_COMMON_002", "common.date.format", HttpStatus.BAD_REQUEST),
     FIELD_VALIDATION_FAILED("ERR_400_COMMON_003", "common.field.failed", HttpStatus.BAD_REQUEST),
-    USER_ID_INVALID("CON_409_COMMON_001", "common.userId.invalid", HttpStatus.CONFLICT),
-    AMOUNT_BELOW_ZERO("CON_409_COMMON_002", "common.amount.min", HttpStatus.CONFLICT),
-    AMOUNT_INVALID_FORMAT("CON_409_COMMON_002", "common.amount.min", HttpStatus.CONFLICT);
+    DB_CONSTRAINT_VIOLATION("CON_409_COMMON_001", "error.db.constraint", HttpStatus.CONFLICT),
+    USER_ID_INVALID("CON_409_COMMON_002", "common.userId.invalid", HttpStatus.CONFLICT),
+    AMOUNT_BELOW_ZERO("CON_409_COMMON_003", "common.amount.min", HttpStatus.CONFLICT),
+    AMOUNT_INVALID_FORMAT("CON_409_COMMON_004", "common.amount.min", HttpStatus.CONFLICT),
+    VERSION_CONFLICT("CON_409_COMMON_005","common.version.conflict", HttpStatus.CONFLICT);
 
     private final String code;
     private final String messageKey;

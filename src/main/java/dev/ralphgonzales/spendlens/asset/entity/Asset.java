@@ -2,9 +2,8 @@ package dev.ralphgonzales.spendlens.asset.entity;
 
 import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.bank.entity.Bank;
-import dev.ralphgonzales.spendlens.shared.domain.UserOwnedEntity;
+import dev.ralphgonzales.spendlens.shared.domain.VersionedEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,14 +16,13 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(
         name = "app_user_asset",
         schema = "spend_lens",
         indexes = @Index(name = "ix_app_user_asset__user__date", columnList = "app_user_id, asset_date")
 )
-public class Asset extends UserOwnedEntity {
+public class Asset extends VersionedEntity {
 
     @Column(nullable = false)
     private LocalDate assetDate;
@@ -41,10 +39,4 @@ public class Asset extends UserOwnedEntity {
 
     @Column(nullable = false,precision = 10, scale = 2)
     private BigDecimal amount;
-
-    @Column(nullable = false)
-    private Long appUserId;
-
-    @Column(nullable = false)
-    private Boolean isActive;
 }

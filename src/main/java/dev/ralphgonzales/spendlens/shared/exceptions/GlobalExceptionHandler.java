@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -85,6 +86,21 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 null)
         );
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handleOptimistic(HttpServletRequest request) {
+        CommonErrorCode error = CommonErrorCode.VERSION_CONFLICT;
+
+        ErrorResponse body = new ErrorResponse(
+                error.getStatus().value(),
+                request.getRequestURI(),
+                Instant.now(),
+                error.getCode(),
+                messageResolver.getMessage(error.getMessageKey()),
+                null);
+
+        return ResponseEntity.status(error.getStatus()).body(body);
     }
 
     @ExceptionHandler(Exception.class)

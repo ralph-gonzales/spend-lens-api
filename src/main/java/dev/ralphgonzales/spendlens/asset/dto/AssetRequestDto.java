@@ -26,5 +26,10 @@ public record AssetDto(
         @ValidAmount
         BigDecimal amount,
         @NotNull(message="{common.userId.required}")
-        Long userId
+        Long userId,
+
+        @NotNull(groups = ValidationGroups.Update.class, message = "{common.version.required}")
+        @Positive(groups = ValidationGroups.Update.class, message = "{common.version.positive}")
+        @Null(groups = ValidationGroups.Create.class, message = "{common.version.null}")
+        Long version
 ) { }
