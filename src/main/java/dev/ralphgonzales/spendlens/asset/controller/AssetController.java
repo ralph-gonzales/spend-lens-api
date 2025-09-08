@@ -1,14 +1,13 @@
 package dev.ralphgonzales.spendlens.asset.controller;
 
-import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetRequestDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetResponseDto;
 import dev.ralphgonzales.spendlens.asset.service.AssetService;
 import dev.ralphgonzales.spendlens.shared.dto.ApiResponse;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import dev.ralphgonzales.spendlens.shared.enums.CommonSuccessCode;
 import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,15 +25,15 @@ public class AssetController {
     private final MessageResolver messageResolver;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<PaginatedResponse<AssetDto>>> findAll(Pageable pageable) {
-        PaginatedResponse<AssetDto> paginated = assetService.findAll(pageable);
-        ApiResponse<PaginatedResponse<AssetDto>> response = new ApiResponse<>(
-                CommonSuccessCode.RESOURCE_FETCHED.getCode(),
-                messageSource.getMessage(CommonSuccessCode.RESOURCE_FETCHED.getMessageKey(),null, LocaleContextHolder.getLocale()),
-                paginated
-        );
+    public ResponseEntity<ApiResponse<PaginatedResponse<AssetResponseDto>>> findAll(Pageable pageable) {
+        CommonSuccessCode successCode = CommonSuccessCode.RESOURCE_FETCHED;
+        PaginatedResponse<AssetResponseDto> paginated = assetService.findAll(pageable);
+        ApiResponse<PaginatedResponse<AssetResponseDto>> response = new ApiResponse<>(
+                successCode.getCode(),
+                messageResolver.getMessage(successCode.getMessageKey()),
+                paginated);
 
-        return ResponseEntity.status(CommonSuccessCode.RESOURCE_FETCHED.getStatus()).body(response);
+        return ResponseEntity.status(successCode.getStatus()).body(response);
     }
 
     @PostMapping

@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.user.dto;
 
-public record UserDto(
+public record UserRequestDto(
        String userName,
        String firstName,
        String lastName,

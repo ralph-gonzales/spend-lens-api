@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.cashflow.service;
 
-import dev.ralphgonzales.spendlens.cashflow.dto.CashFlowDto;
+import dev.ralphgonzales.spendlens.cashflow.dto.CashFlowRequestDto;
+import dev.ralphgonzales.spendlens.cashflow.dto.CashFlowResponseDto;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -8,17 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CashFlowServiceImpl implements CashFlowService {
     @Override
-    public CashFlowDto create(CashFlowDto dto) {
+    public CashFlowResponseDto create(CashFlowRequestDto dto) {
         return null;
     }
 
     @Override
-    public CashFlowDto update(CashFlowDto dto, Long id) {
+    public CashFlowResponseDto update(CashFlowRequestDto dto, Long id) {
         return null;
     }
 
     @Override
-    public CashFlowDto getById(Long id) {
+    public CashFlowResponseDto getById(Long id) {
         return null;
     }
 
@@ -28,7 +29,7 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     @Override
-    public PaginatedResponse<CashFlowDto> findAll(Pageable pageable) {
+    public PaginatedResponse<CashFlowResponseDto> findAll(Pageable pageable) {
         return null;
     }
 }

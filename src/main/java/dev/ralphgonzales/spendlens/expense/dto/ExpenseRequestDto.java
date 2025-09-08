@@ -3,7 +3,7 @@ package dev.ralphgonzales.spendlens.expense.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record ExpenseDto(
+public record ExpenseRequestDto(
         String expenseName,
         LocalDate expenseDate,
         String expenseTypeCode,

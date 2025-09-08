@@ -1,22 +1,23 @@
 package dev.ralphgonzales.spendlens.asset.service;
 
-import dev.ralphgonzales.spendlens.asset.dto.TimeDepositDto;
+import dev.ralphgonzales.spendlens.asset.dto.TimeDepositRequestDto;
+import dev.ralphgonzales.spendlens.asset.dto.TimeDepositResponseDto;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 
 public class TimeDepositServiceImpl implements TimeDepositService {
     @Override
-    public TimeDepositDto create(TimeDepositDto dto) {
+    public TimeDepositResponseDto create(TimeDepositRequestDto dto) {
         return null;
     }
 
     @Override
-    public TimeDepositDto update(TimeDepositDto dto, Long id) {
+    public TimeDepositResponseDto update(TimeDepositRequestDto dto, Long id) {
         return null;
     }
 
     @Override
-    public TimeDepositDto getById(Long id) {
+    public TimeDepositResponseDto getById(Long id) {
         return null;
     }
 
@@ -26,7 +27,7 @@ public class TimeDepositServiceImpl implements TimeDepositService {
     }
 
     @Override
-    public PaginatedResponse<TimeDepositDto> findAll(Pageable pageable) {
+    public PaginatedResponse<TimeDepositResponseDto> findAll(Pageable pageable) {
         return null;
     }
 }

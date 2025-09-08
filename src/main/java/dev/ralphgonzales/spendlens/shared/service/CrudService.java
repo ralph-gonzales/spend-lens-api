@@ -3,10 +3,10 @@ package dev.ralphgonzales.spendlens.shared.service;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import org.springframework.data.domain.Pageable;
 
-public interface CrudService<D> {
-    D create(D dto);
-    D update(D dto, Long id);
-    D getById(Long id);
+public interface CrudService<T,R> {
+    R create(T requestDto);
+    R update(T requestDto, Long id);
+    R getById(Long id);
     void delete(Long id);
-    PaginatedResponse<D> findAll(Pageable pageable);
+    PaginatedResponse<R> findAll(Pageable pageable);
 }

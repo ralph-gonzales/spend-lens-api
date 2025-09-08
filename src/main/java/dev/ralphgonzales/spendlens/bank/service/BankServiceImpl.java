@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.bank.service;
 
-import dev.ralphgonzales.spendlens.bank.dto.BankDto;
+import dev.ralphgonzales.spendlens.bank.dto.BankRequestDto;
+import dev.ralphgonzales.spendlens.bank.dto.BankResponseDto;
 import dev.ralphgonzales.spendlens.bank.repository.BankRepository;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +18,17 @@ public class BankServiceImpl implements BankService{
     private final BankRepository bankRepository;
 
     @Override
-    public BankDto create(BankDto dto) {
+    public BankResponseDto create(BankRequestDto dto) {
         return null;
     }
 
     @Override
-    public BankDto update(BankDto dto, Long id) {
+    public BankResponseDto update(BankRequestDto dto, Long id) {
         return null;
     }
 
     @Override
-    public BankDto getById(Long id) {
+    public BankResponseDto getById(Long id) {
         return null;
     }
 
@@ -37,7 +38,7 @@ public class BankServiceImpl implements BankService{
     }
 
     @Override
-    public PaginatedResponse<BankDto> findAll(Pageable pageable) {
+    public PaginatedResponse<BankResponseDto> findAll(Pageable pageable) {
         return null;
     }
 

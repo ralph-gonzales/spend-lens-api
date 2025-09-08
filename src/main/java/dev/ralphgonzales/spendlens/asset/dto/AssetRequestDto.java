@@ -11,11 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @ValidBank
-public record AssetDto(
-        @Null(groups = ValidationGroups.Create.class, message = "{asset.id.null}")
-        @NotNull(groups = ValidationGroups.Update.class, message = "{asset.id.required}")
-        @Positive(groups = ValidationGroups.Update.class, message = "{asset.id.positive}")
-        Long id,
+public record AssetRequestDto(
         @NotNull(message="{asset.assetDate.required}")
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,

@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.asset.validation.validator;
 
-import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetRequestDto;
 import dev.ralphgonzales.spendlens.asset.entity.Asset;
 import dev.ralphgonzales.spendlens.asset.repository.AssetRepository;
 import dev.ralphgonzales.spendlens.asset.enums.AssetType;
@@ -8,17 +8,15 @@ import dev.ralphgonzales.spendlens.asset.specification.AssetSpecification;
 import dev.ralphgonzales.spendlens.bank.service.BankService;
 import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
 import dev.ralphgonzales.spendlens.shared.exceptions.BusinessValidationException;
-import dev.ralphgonzales.spendlens.shared.persistence.jpa.SpecificationUtil;
+import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import dev.ralphgonzales.spendlens.shared.validation.contract.BusinessValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 @Component
@@ -30,17 +28,22 @@ public class AssetValidator implements BusinessValidator<AssetDto> {
     private final MessageResolver messageResolver;
 
     @Override
-    public void createValidate(AssetDto assetDto){
-        final Locale locale = LocaleContextHolder.getLocale();
-
-        validateUniqueness(assetDto, locale);
-        validateBank(assetDto, locale);
+    public void createValidate(AssetRequestDto assetDto){
+        validateUniqueness(assetDto, false, null);
+        validateBank(assetDto);
     }
 
     @Override
-    public void updateValidate(AssetDto assetDto){
+    public void updateValidate(AssetRequestDto assetDto, Asset existing){
+        validateUniqueness(assetDto, true, existing);
+        validateBank(assetDto);
+        validateVersion(assetDto, existing);
+    }
 
     }
+    private void validateUniqueness(AssetRequestDto request, boolean isUpdate, Asset existing){
+        LocalDate startDate = request.assetDate().with(TemporalAdjusters.firstDayOfMonth());
+        CommonErrorCode error = CommonErrorCode.ASSET_DB_RECORD_DUPLICATE;
 
     private void validateUniqueness(AssetDto assetDto, Locale locale){
         AssetType type = assetDto.assetType();
@@ -52,17 +55,22 @@ public class AssetValidator implements BusinessValidator<AssetDto> {
         spec = SpecificationUtil.and(spec, AssetSpecification.isAssetTypeEquals(type.name()));
         if(AssetType.BANK == type){
             spec = SpecificationUtil.and(spec, AssetSpecification.isBankIdEquals(assetDto.bankId()));
+        if(Objects.equals(AssetType.BANK.code(), request.assetType())){
+            spec = spec.and(AssetSpecification.isBankIdEquals(request.bankId()));
         }
 
-        if(!assetRepository.findAll(spec).isEmpty()){
-            throw new BusinessValidationException(CommonErrorCode.ASSET_DB_RECORD_DUPLICATE.getCode(),
-                    messageSource.getMessage(CommonErrorCode.ASSET_DB_RECORD_DUPLICATE.getMessageKey(),null,locale),
-                    CommonErrorCode.ASSET_DB_RECORD_DUPLICATE.getStatus());
+        boolean exists = assetRepository.exists(spec);
+
+        if(exists){
+            throw new BusinessValidationException(error.getCode(),
+                    messageResolver.getMessage(error.getMessageKey()),
+                    error.getStatus());
         }
     }
 
-    private void validateBank(AssetDto assetDto, Locale locale){
-        if(AssetType.BANK == assetDto.assetType()){
+    private void validateBank(AssetRequestDto request){
+        if(Objects.equals(AssetType.BANK.code(), request.assetType())){
+            CommonErrorCode error = CommonErrorCode.BANK_ID_INVALID;
             Set<Long> bankIds = bankService.getAllActiveBanks();
             boolean isValid = bankIds.contains(request.bankId());
 

@@ -1,27 +1,53 @@
 package dev.ralphgonzales.spendlens.asset.service;
 
-import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetRequestDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetResponseDto;
 import dev.ralphgonzales.spendlens.asset.entity.Asset;
 import dev.ralphgonzales.spendlens.asset.mapper.AssetMapper;
 import dev.ralphgonzales.spendlens.asset.repository.AssetRepository;
+import dev.ralphgonzales.spendlens.asset.validation.validator.AssetValidator;
+import dev.ralphgonzales.spendlens.bank.entity.Bank;
+import dev.ralphgonzales.spendlens.bank.repository.BankRepository;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
-import dev.ralphgonzales.spendlens.shared.persistence.constraints.translator.DbConstraintTranslator;
+import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
+import dev.ralphgonzales.spendlens.shared.exceptions.BusinessValidationException;
+import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @RequiredArgsConstructor
 @Service
 public class AssetServiceImpl implements AssetService {
 
     private final AssetRepository assetRepository;
-    private final AssetMapper assetMapper;
-    private final DbConstraintTranslator dbConstraintTranslator;
+    private final AssetMapper mapper;
+    private final AssetValidator validator;
+    private final BankRepository bankRepository;
 
+    @Transactional
     @Override
+    @Validated(ValidationGroups.Create.class)
+    public AssetResponseDto create(@Valid AssetRequestDto request) {
+        validator.createValidate(request);
+
+        Asset entity = mapper.toEntity(request);
+        Bank bank = bankRepository.findById(request.bankId()).orElseThrow(() -> {
+            CommonErrorCode ec = CommonErrorCode.BANK_NOT_EXIST;
+            return new BusinessValidationException(ec.getCode(),ec.getMessageKey(),ec.getStatus());
+        });
+        entity.setBank(bank);
+
+        Asset saved = assetRepository.save(entity);
+
+        return mapper.toResponse(saved);
+    }
+
     @Transactional
     public AssetDto create(AssetDto assetDto) {
         try{
@@ -38,7 +64,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetDto getById(Long id) { return null;}
+    public AssetResponseDto getById(Long id) { return null;}
 
     @Override
     public void delete(Long id) {
@@ -47,11 +73,11 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     @Transactional(readOnly = true)
-    public PaginatedResponse<AssetDto> findAll(Pageable pageable) {
+    public PaginatedResponse<AssetResponseDto> findAll(Pageable pageable) {
         Page<Asset> page = assetRepository.findAll(pageable);
 
         return new PaginatedResponse<>(
-                assetMapper.toListDto(page.getContent()),
+                mapper.toResponseList(page.getContent()),
                 page.getNumber(),
                 page.getSize(),
                 page.getTotalElements(),

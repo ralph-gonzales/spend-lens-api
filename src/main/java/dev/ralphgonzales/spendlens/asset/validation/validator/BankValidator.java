@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.asset.validation.validator;
 
-import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
+import dev.ralphgonzales.spendlens.asset.dto.AssetRequestDto;
 import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
@@ -8,10 +8,11 @@ import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.Objects;
 
 @RequiredArgsConstructor
-public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
+public class BankValidator implements ConstraintValidator<ValidBank, AssetRequestDto> {
 
     private final MessageResolver messageResolver;
 
@@ -25,8 +26,8 @@ public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
     }
 
     @Override
-    public boolean isValid(AssetDto assetDto, ConstraintValidatorContext constraintValidatorContext) {
-        if(AssetType.BANK == assetDto.assetType() && assetDto.bankId() == null){
+    public boolean isValid(AssetRequestDto assetDto, ConstraintValidatorContext constraintValidatorContext) {
+        if(Objects.equals(AssetType.BANK.code(), assetDto.assetType()) && assetDto.bankId() == null){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(message)
                     .addPropertyNode(BANK_ID_FIELD)

@@ -1,22 +1,23 @@
 package dev.ralphgonzales.spendlens.user.service;
 
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
-import dev.ralphgonzales.spendlens.user.dto.UserDto;
+import dev.ralphgonzales.spendlens.user.dto.UserRequestDto;
+import dev.ralphgonzales.spendlens.user.dto.UserResponseDto;
 import org.springframework.data.domain.Pageable;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public UserDto create(UserDto dto) {
+    public UserResponseDto create(UserRequestDto dto) {
         return null;
     }
 
     @Override
-    public UserDto update(UserDto dto, Long id) {
+    public UserResponseDto update(UserRequestDto dto, Long id) {
         return null;
     }
 
     @Override
-    public UserDto getById(Long id) {
+    public UserResponseDto getById(Long id) {
         return null;
     }
 
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginatedResponse<UserDto> findAll(Pageable pageable) {
+    public PaginatedResponse<UserResponseDto> findAll(Pageable pageable) {
         return null;
     }
 }

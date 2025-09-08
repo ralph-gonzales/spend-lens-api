@@ -1,6 +1,6 @@
 package dev.ralphgonzales.spendlens.bank.dto;
 
-public record BankDto(
+public record BankSummaryDto(
         Long id,
         String name
 ) {
