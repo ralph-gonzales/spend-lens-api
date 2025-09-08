@@ -44,16 +44,14 @@ public class AssetValidator implements BusinessValidator<AssetRequestDto, Asset>
         LocalDate startDate = request.assetDate().with(TemporalAdjusters.firstDayOfMonth());
         CommonErrorCode error = CommonErrorCode.ASSET_DB_RECORD_DUPLICATE;
 
-    private void validateUniqueness(AssetDto assetDto, Locale locale){
-        AssetType type = assetDto.assetType();
-        LocalDate startDate = assetDto.assetDate().with(TemporalAdjusters.firstDayOfMonth());
+        Specification<Asset> spec = (root, query, cb) -> cb.conjunction();
 
-        Specification<Asset> spec = null;
-        spec = SpecificationUtil.and(spec, AssetSpecification.isUserIdEqual(assetDto.userId()));
-        spec = SpecificationUtil.and(spec, AssetSpecification.isAssetMonthEquals(startDate));
-        spec = SpecificationUtil.and(spec, AssetSpecification.isAssetTypeEquals(type.name()));
-        if(AssetType.BANK == type){
-            spec = SpecificationUtil.and(spec, AssetSpecification.isBankIdEquals(assetDto.bankId()));
+        spec = spec
+                .and(AssetSpecification.isUserIdEqual(request.userId()))
+                .and(AssetSpecification.isAssetMonthEquals(startDate))
+                .and(AssetSpecification.isAssetTypeEquals(request.assetType()))
+                .and(AssetSpecification.isActive());
+
         if(Objects.equals(AssetType.BANK.code(), request.assetType())){
             spec = spec.and(AssetSpecification.isBankIdEquals(request.bankId()));
         }

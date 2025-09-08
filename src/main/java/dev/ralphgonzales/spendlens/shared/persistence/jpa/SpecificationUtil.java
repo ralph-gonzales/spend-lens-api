@@ -6,18 +6,6 @@ public final class SpecificationUtil {
 
     private SpecificationUtil(){}
 
-    public static <T> Specification<T> and(Specification<T> base, Specification<T> other) {
-        return base == null ? other : base.and(other);
-    }
-
-    public static <T> Specification<T> or(Specification<T> base, Specification<T> other) {
-        return base == null ? other : base.or(other);
-    }
-
-    public static <T> Specification<T> not(Specification<T> spec) {
-        return spec == null ? null : Specification.not(spec);
-    }
-
     public static <T> Specification<T> isEquals(String fieldName, Object value){
         return (root, query, cb) -> {
             if (value == null) return null;
