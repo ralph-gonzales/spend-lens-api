@@ -1,6 +1,7 @@
 package dev.ralphgonzales.spendlens.shared.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedBy;
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime;
 
 @FieldNameConstants
 @MappedSuperclass
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 

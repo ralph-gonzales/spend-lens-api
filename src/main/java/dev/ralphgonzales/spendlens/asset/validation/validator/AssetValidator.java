@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class AssetValidator implements BusinessValidator<AssetDto> {
+public class AssetValidator implements BusinessValidator<AssetRequestDto, Asset> {
 
     private final AssetRepository assetRepository;
     private final BankService bankService;
@@ -40,7 +40,6 @@ public class AssetValidator implements BusinessValidator<AssetDto> {
         validateVersion(assetDto, existing);
     }
 
-    }
     private void validateUniqueness(AssetRequestDto request, boolean isUpdate, Asset existing){
         LocalDate startDate = request.assetDate().with(TemporalAdjusters.firstDayOfMonth());
         CommonErrorCode error = CommonErrorCode.ASSET_DB_RECORD_DUPLICATE;

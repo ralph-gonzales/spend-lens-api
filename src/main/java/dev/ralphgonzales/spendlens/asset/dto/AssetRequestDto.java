@@ -1,7 +1,6 @@
 package dev.ralphgonzales.spendlens.asset.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import dev.ralphgonzales.spendlens.shared.validation.annotation.ValidAmount;
@@ -15,12 +14,16 @@ public record AssetRequestDto(
         @NotNull(message="{asset.assetDate.required}")
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,
+
         @NotNull(message="{asset.assetTypeCode.required}")
         @Size(max=10, message = "{asset.assetTypeCode.length}")
-        AssetType assetType,
+        String assetType,
+
         Long bankId,
+
         @ValidAmount
         BigDecimal amount,
+
         @NotNull(message="{common.userId.required}")
         Long userId,
 

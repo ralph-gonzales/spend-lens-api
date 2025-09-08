@@ -12,5 +12,5 @@ import lombok.experimental.FieldNameConstants;
 @Setter
 public abstract class UserOwnedEntity extends BaseEntity {
     @Column(nullable = false, updatable = false)
-    private Long userId;
+    private Long appUserId;
 }
