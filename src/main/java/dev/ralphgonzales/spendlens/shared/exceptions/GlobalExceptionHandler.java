@@ -103,6 +103,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(error.getStatus()).body(body);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex, HttpServletRequest request){
+        CommonErrorCode error =  dbConstraintTranslator.map(ex);
+
+        ErrorResponse body = new ErrorResponse(
+                error.getStatus().value(),
+                request.getRequestURI(),
+                Instant.now(),
+                error.getCode(),
+                messageResolver.getMessage(error.getMessageKey())
+                ,null);
+
+        return ResponseEntity.status(error.getStatus()).body(body);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
         return ResponseEntity.status(CommonErrorCode.UNEXPECTED_ERROR.getStatus()).body(new ErrorResponse(

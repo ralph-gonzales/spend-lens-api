@@ -5,7 +5,7 @@ import dev.ralphgonzales.spendlens.asset.service.AssetService;
 import dev.ralphgonzales.spendlens.shared.dto.ApiResponse;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import dev.ralphgonzales.spendlens.shared.enums.CommonSuccessCode;
-import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
+import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,7 +23,7 @@ import java.net.URI;
 public class AssetController {
 
     private final AssetService assetService;
-    private final MessageSource messageSource;
+    private final MessageResolver messageResolver;
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedResponse<AssetDto>>> findAll(Pageable pageable) {
@@ -38,15 +38,13 @@ public class AssetController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<AssetDto>> save(@Validated(ValidationGroups.Create.class)
-                                                                             @RequestBody AssetDto assetDto) {
-
-        AssetDto saved = assetService.create(assetDto);
-        ApiResponse<AssetDto> response = new ApiResponse<>(
-                CommonSuccessCode.RESOURCE_CREATED.getCode(),
-                messageSource.getMessage(CommonSuccessCode.RESOURCE_CREATED.getMessageKey(),null,LocaleContextHolder.getLocale()),
-                saved
-        );
+    public ResponseEntity<ApiResponse<AssetResponseDto>> create(@RequestBody AssetRequestDto request){
+        CommonSuccessCode successCode = CommonSuccessCode.RESOURCE_CREATED;
+        AssetResponseDto saved = assetService.create(request);
+        ApiResponse<AssetResponseDto> response = new ApiResponse<>(
+                successCode.getCode(),
+                messageResolver.getMessage(successCode.getMessageKey()),
+                saved);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

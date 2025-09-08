@@ -4,16 +4,16 @@ import dev.ralphgonzales.spendlens.asset.dto.AssetDto;
 import dev.ralphgonzales.spendlens.asset.enums.AssetType;
 import dev.ralphgonzales.spendlens.asset.validation.annotation.ValidBank;
 import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
+import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 @RequiredArgsConstructor
 public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
 
-    private final MessageSource messageSource;
+    private final MessageResolver messageResolver;
 
     static final String BANK_ID_FIELD = "bankId";
 
@@ -37,7 +37,7 @@ public class BankValidator implements ConstraintValidator<ValidBank, AssetDto> {
         if(assetDto.bankId() < 0 ){
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate(
-                    messageSource.getMessage(CommonErrorCode.BANK_ID_INVALID.getMessageKey(),null, LocaleContextHolder.getLocale()))
+                            messageResolver.getMessage(CommonErrorCode.BANK_ID_INVALID.getMessageKey()))
                     .addPropertyNode(BANK_ID_FIELD)
                     .addConstraintViolation();
             return false;

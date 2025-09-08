@@ -27,7 +27,7 @@ public class AssetValidator implements BusinessValidator<AssetDto> {
 
     private final AssetRepository assetRepository;
     private final BankService bankService;
-    private final MessageSource messageSource;
+    private final MessageResolver messageResolver;
 
     @Override
     public void createValidate(AssetDto assetDto){
@@ -64,12 +64,21 @@ public class AssetValidator implements BusinessValidator<AssetDto> {
     private void validateBank(AssetDto assetDto, Locale locale){
         if(AssetType.BANK == assetDto.assetType()){
             Set<Long> bankIds = bankService.getAllActiveBanks();
+            boolean isValid = bankIds.contains(request.bankId());
 
-            if(!bankIds.contains(assetDto.bankId())){
-                throw new BusinessValidationException(CommonErrorCode.BANK_ID_INVALID.getCode(),
-                        messageSource.getMessage(CommonErrorCode.BANK_ID_INVALID.getMessageKey(),null,locale),
-                        CommonErrorCode.BANK_ID_INVALID.getStatus());
+            if(isValid){
+                throw new BusinessValidationException(error.getCode(),
+                        messageResolver.getMessage(error.getMessageKey()),
+                        error.getStatus());
             }
+        }
+    }
+
+    private void validateVersion(AssetRequestDto request, Asset entity){
+        if(!Objects.equals(request.version(), entity.getVersion())){
+            CommonErrorCode error = CommonErrorCode.VERSION_CONFLICT;
+            throw new BusinessValidationException(error.getCode(),
+                    messageResolver.getMessage(error.getMessageKey()), error.getStatus());
         }
     }
 }
