@@ -14,7 +14,6 @@ import dev.ralphgonzales.spendlens.shared.exceptions.BusinessValidationException
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -49,18 +48,20 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Transactional
-    public AssetDto create(AssetDto assetDto) {
-        try{
-            Asset saved = assetRepository.save(assetMapper.toEntity(assetDto));
-            return assetMapper.toDto(saved);
-        }catch(DataIntegrityViolationException ex) {
-            throw dbConstraintTranslator.map(ex);
-        }
-    }
-
     @Override
-    public AssetDto update(AssetDto dto, Long id) {
-        return null;
+    @Validated(ValidationGroups.Update.class)
+    public AssetResponseDto update(@Valid AssetRequestDto request, Long id) {
+        Asset existing = assetRepository.findById(id).orElseThrow(() -> {
+            CommonErrorCode ec = CommonErrorCode.ASSET_NOT_EXIST;
+            return new BusinessValidationException(ec.getCode(), ec.getMessageKey(),
+                    ec.getStatus());
+        });
+
+        validator.updateValidate(request, existing);
+
+        mapper.overwriteFromDto(request, existing);
+
+        return mapper.toResponse(existing);
     }
 
     @Override
