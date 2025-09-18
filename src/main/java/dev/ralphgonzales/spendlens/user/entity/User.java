@@ -23,6 +23,9 @@ import lombok.experimental.FieldNameConstants;
 )
 public class User extends BaseEntity {
 
+    @Id
+    private Long id;
+
     @Column(nullable = false, length = 50)
     private String username;
 

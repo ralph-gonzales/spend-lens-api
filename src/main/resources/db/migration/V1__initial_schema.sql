@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 CREATE SCHEMA spend_lens;
 
 CREATE TABLE spend_lens.role_type (
@@ -5,8 +7,15 @@ CREATE TABLE spend_lens.role_type (
     name TEXT NOT NULL
 );
 
+CREATE SEQUENCE spend_lens.app_user_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_id_seq'),
     username VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(100),
@@ -29,12 +38,22 @@ CREATE TABLE spend_lens.app_user (
         CHECK (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$')
 );
 
+ALTER SEQUENCE spend_lens.app_user_id_seq
+    OWNED BY spend_lens.app_user.id;
+
 CREATE UNIQUE INDEX uq_app_user__email_normalized__active_only
 ON spend_lens.app_user (email_normalized)
 WHERE is_active;
 
+CREATE SEQUENCE spend_lens.app_user_cash_flow_type_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_cash_flow_type (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_cash_flow_type_id_seq'),
     name VARCHAR(100) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -54,8 +73,18 @@ CREATE TABLE spend_lens.app_user_cash_flow_type (
 CREATE INDEX ix_app_user__cash_flow_type_user
     ON spend_lens.app_user_cash_flow_type (app_user_id);
 
+ALTER SEQUENCE spend_lens.app_user_cash_flow_type_id_seq
+    OWNED BY spend_lens.app_user_cash_flow_type.id;
+
+CREATE SEQUENCE spend_lens.app_user_cash_flow_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_cash_flow (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_cash_flow_id_seq'),
     cash_flow_date date NOT NULL,
     cash_flow_month date GENERATED ALWAYS AS (
         date_trunc('month', cash_flow_date::timestamp)::date
@@ -88,8 +117,18 @@ CREATE UNIQUE INDEX uq_app_user_cf__user__date__desc__active_only
 ON spend_lens.app_user_cash_flow (app_user_id, cash_flow_month, description_normalized)
 WHERE is_active;
 
+ALTER SEQUENCE spend_lens.app_user_cash_flow_type_id_seq
+    OWNED BY spend_lens.app_user_cash_flow.id;
+
+CREATE SEQUENCE spend_lens.app_user_cash_flow_type_map_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_cash_flow_type_map (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_cash_flow_type_map_id_seq'),
     app_user_cash_flow_id BIGINT NOT NULL,
     app_user_cash_flow_type_id BIGINT NOT NULL,
     CONSTRAINT pk_app_user_cash_flow_type_map PRIMARY KEY (id),
@@ -100,8 +139,18 @@ CREATE TABLE spend_lens.app_user_cash_flow_type_map (
     CONSTRAINT uq_app_user_cft_map__au_cf_id__au_cft_id UNIQUE (app_user_cash_flow_id,app_user_cash_flow_type_id)
 );
 
+ALTER SEQUENCE spend_lens.app_user_cash_flow_type_map_id_seq
+    OWNED BY spend_lens.app_user_cash_flow_type_map.id;
+
+CREATE SEQUENCE spend_lens.cash_flow_type_template_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.cash_flow_type_template (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.cash_flow_type_template_id_seq'),
     name VARCHAR(100) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -119,8 +168,18 @@ CREATE UNIQUE INDEX uq_cft_template__name_normalized__active_only
 ON spend_lens.cash_flow_type_template (name_normalized)
 WHERE is_active;
 
+ALTER SEQUENCE spend_lens.cash_flow_type_template_id_seq
+    OWNED BY spend_lens.cash_flow_type_template.id;
+
+CREATE SEQUENCE spend_lens.bank_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.bank (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.bank_id_seq'),
     name VARCHAR(254) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -137,10 +196,20 @@ CREATE UNIQUE INDEX uq_bank__name__active_only
 ON spend_lens.bank (name_normalized)
 WHERE is_active;
 
+ALTER SEQUENCE spend_lens.bank_id_seq
+    OWNED BY spend_lens.bank.id;
+
 CREATE TABLE spend_lens.asset_type (
     code VARCHAR(10) PRIMARY KEY,
     name TEXT NOT NULL
 );
+
+CREATE SEQUENCE spend_lens.app_user_asset_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 50
+    NO CYCLE;
 
 CREATE TABLE spend_lens.app_user_asset (
     id BIGSERIAL,
@@ -182,13 +251,23 @@ ON spend_lens.app_user_asset (
 CREATE INDEX ix_app_user_asset__user__date
     ON spend_lens.app_user_asset (app_user_id, asset_date);
 
+ALTER SEQUENCE spend_lens.app_user_asset_id_seq
+    OWNED BY spend_lens.app_user_asset.id;
+
 CREATE TABLE spend_lens.payment_type (
     code VARCHAR(20) PRIMARY KEY,
     name TEXT NOT NULL
 );
 
+CREATE SEQUENCE spend_lens.app_user_expense_category_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_expense_category (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_expense_category_id_seq'),
     name VARCHAR(100) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -212,8 +291,18 @@ WHERE is_active;
 CREATE INDEX ix_app_user_expense_category__user
     ON spend_lens.app_user_expense_category (app_user_id);
 
+ALTER SEQUENCE spend_lens.app_user_expense_category_id_seq
+    OWNED BY spend_lens.app_user_expense_category.id;
+
+CREATE SEQUENCE spend_lens.expense_category_template_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.expense_category_template(
-    id BIGSERIAL,
+    id BIGINT default nextval('spend_lens.expense_category_template_id_seq'),
     name VARCHAR(100) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -231,13 +320,23 @@ CREATE UNIQUE INDEX uq_expense_category_template__name__active_only
 ON spend_lens.expense_category_template (name_normalized)
 WHERE is_active;
 
+ALTER SEQUENCE spend_lens.expense_category_template_id_seq
+    OWNED BY spend_lens.expense_category_template.id;
+
 CREATE TABLE spend_lens.expense_category_type(
     code VARCHAR(20) PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
 
+CREATE SEQUENCE spend_lens.app_user_expense_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 50
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_expense (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_expense_id_seq'),
     name VARCHAR(100) NOT NULL,
     name_normalized TEXT GENERATED ALWAYS AS (
         LOWER(BTRIM(name)) COLLATE "C"
@@ -270,8 +369,18 @@ CREATE UNIQUE INDEX uq_app_user_expense__user__name__date__active_only
 ON spend_lens.app_user_expense (app_user_id, name_normalized, expense_date)
 WHERE is_active;
 
+ALTER SEQUENCE spend_lens.app_user_expense_id_seq
+    OWNED BY spend_lens.app_user_expense.id;
+
+CREATE SEQUENCE spend_lens.app_user_expense_category_map_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_expense_category_map (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_expense_category_map_id_seq'),
     app_user_expense_id BIGINT NOT NULL,
     app_user_expense_category_id BIGINT NOT NULL,
     expense_category_type VARCHAR(20) NOT NULL,
@@ -287,8 +396,18 @@ CREATE TABLE spend_lens.app_user_expense_category_map (
     CONSTRAINT uq_app_user_ec_map__expense_id__ec_id UNIQUE (app_user_expense_id, app_user_expense_category_id)
 );
 
+ALTER SEQUENCE spend_lens.app_user_expense_category_map_id_seq
+    OWNED BY spend_lens.app_user_expense_category_map.id;
+
+CREATE SEQUENCE spend_lens.app_user_time_deposit_id_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 50
+    NO CYCLE;
+
 CREATE TABLE spend_lens.app_user_time_deposit (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_time_deposit_id_seq'),
     bank_id BIGINT NOT NULL,
     maturity_date DATE NOT NULL,
     principal_amount NUMERIC(10,2) NOT NULL,
@@ -319,3 +438,6 @@ ON spend_lens.app_user_time_deposit (
 
 CREATE INDEX ix_app_user_time_deposit__user__date
     ON spend_lens.app_user_time_deposit (app_user_id, maturity_date);
+
+ALTER SEQUENCE spend_lens.app_user_time_deposit_id_seq
+    OWNED BY spend_lens.app_user_time_deposit.id;

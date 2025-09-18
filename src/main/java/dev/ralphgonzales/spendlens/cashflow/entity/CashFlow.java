@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 @Entity
 public class CashFlow extends UserOwnedEntity {
+    @Id
+    Long id;
     private LocalDate cashFlowDate;
     private String cashFlowName;
     private String cashFlowTypeCode;

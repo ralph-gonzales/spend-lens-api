@@ -22,7 +22,16 @@ import java.time.LocalDate;
         schema = "spend_lens",
         indexes = @Index(name = "ix_app_user_asset__user__date", columnList = "app_user_id, asset_date")
 )
+@SequenceGenerator(
+        name = "asset_seq",
+        sequenceName = "spend_lens.app_user_asset_id_seq",
+        allocationSize = 50
+)
 public class Asset extends VersionedEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "asset_seq")
+    private Long id;
 
     @Column(nullable = false)
     private LocalDate assetDate;

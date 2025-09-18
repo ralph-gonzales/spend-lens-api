@@ -122,8 +122,8 @@ public class GlobalExceptionHandler {
                 request.getRequestURI(),
                 Instant.now(),
                 error.getCode(),
-                messageResolver.getMessage(error.getMessageKey())
-                ,null);
+                messageResolver.getMessage(error.getMessageKey()),
+                null);
 
         return ResponseEntity.status(error.getStatus()).body(body);
     }

@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 @Entity
 public class Expense extends UserOwnedEntity {
+    @Id
+    Long id;
     private String expenseName;
     private LocalDate expenseDate;
     private String expenseTypeCode;

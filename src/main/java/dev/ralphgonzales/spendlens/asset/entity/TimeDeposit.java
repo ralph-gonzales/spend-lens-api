@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 @Entity
 public class TimeDeposit extends UserOwnedEntity {
+    @Id
+    Long id;
     private Long bankId;
     private LocalDateTime maturityDate;
     private BigDecimal principalAmount;

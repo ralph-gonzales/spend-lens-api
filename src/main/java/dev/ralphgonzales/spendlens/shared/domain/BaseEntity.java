@@ -18,11 +18,8 @@ import java.time.OffsetDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
-    private Boolean isActive;
+    @Column(nullable = false)
+    private Boolean isActive = true;
 
     @CreatedBy
     @Column(updatable = false)

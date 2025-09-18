@@ -9,6 +9,9 @@ import lombok.experimental.FieldNameConstants;
 @Table(name = "bank", schema = "spend_lens")
 public class Bank extends BaseEntity {
 
+    @Id
+    Long id;
+
     @Column(nullable = false, length = 254)
     private String name;
 
