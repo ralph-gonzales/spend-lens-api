@@ -2,8 +2,12 @@ package dev.ralphgonzales.spendlens.bank.service;
 
 import dev.ralphgonzales.spendlens.bank.dto.BankRequestDto;
 import dev.ralphgonzales.spendlens.bank.dto.BankResponseDto;
+import dev.ralphgonzales.spendlens.bank.dto.BankSummaryDto;
 import dev.ralphgonzales.spendlens.bank.repository.BankRepository;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
+import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
+import dev.ralphgonzales.spendlens.shared.exceptions.BusinessValidationException;
+import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +20,7 @@ import java.util.Set;
 public class BankServiceImpl implements BankService{
 
     private final BankRepository bankRepository;
+    private final MessageResolver messageResolver;
 
     @Override
     public BankResponseDto create(BankRequestDto dto) {
@@ -42,9 +47,19 @@ public class BankServiceImpl implements BankService{
         return null;
     }
 
-    @Cacheable(value = "banks", key = "'allActiveBanks'")
     @Override
+    @Cacheable(value = "banks", key = "'allActiveBanks'")
     public Set<Long> getAllActiveBanks(){
         return bankRepository.findIdsByActiveTrue();
+    }
+
+    @Override
+    @Cacheable(value = "bankSummaryById", key = "#id")
+    public BankSummaryDto getSummaryById(Long id) {
+        return bankRepository.findSummaryById(id).orElseThrow(() -> new BusinessValidationException(
+                messageResolver.getMessage(CommonErrorCode.BANK_NOT_EXIST.getMessageKey()),
+                CommonErrorCode.BANK_NOT_EXIST.getCode(),
+                CommonErrorCode.BANK_NOT_EXIST.getStatus()
+        ));
     }
 }

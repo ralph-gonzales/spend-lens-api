@@ -28,6 +28,8 @@ public class AssetServiceImpl implements AssetService {
     private final AssetMapper mapper;
     private final AssetValidator validator;
     private final BankRepository bankRepository;
+    private final BankService bankService;
+    private final MessageResolver messageResolver;
 
     @Transactional
     @Override
@@ -44,7 +46,7 @@ public class AssetServiceImpl implements AssetService {
 
         Asset saved = assetRepository.save(entity);
 
-        return mapper.toResponse(saved);
+        return mapper.toResponse(saved, bankService);
     }
 
     @Transactional
@@ -80,7 +82,7 @@ public class AssetServiceImpl implements AssetService {
         Page<Asset> page = assetRepository.findAll(pageable);
 
         return new PaginatedResponse<>(
-                mapper.toResponseList(page.getContent()),
+                mapper.toResponseList(page.getContent(), bankService),
                 page.getNumber(),
                 page.getSize(),
                 page.getTotalElements(),
