@@ -8,9 +8,11 @@ import dev.ralphgonzales.spendlens.asset.repository.AssetRepository;
 import dev.ralphgonzales.spendlens.asset.validation.validator.AssetValidator;
 import dev.ralphgonzales.spendlens.bank.entity.Bank;
 import dev.ralphgonzales.spendlens.bank.repository.BankRepository;
+import dev.ralphgonzales.spendlens.bank.service.BankService;
 import dev.ralphgonzales.spendlens.shared.dto.PaginatedResponse;
 import dev.ralphgonzales.spendlens.shared.enums.CommonErrorCode;
 import dev.ralphgonzales.spendlens.shared.exceptions.BusinessValidationException;
+import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import dev.ralphgonzales.spendlens.shared.validation.group.ValidationGroups;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +40,18 @@ public class AssetServiceImpl implements AssetService {
         validator.createValidate(request);
 
         Asset entity = mapper.toEntity(request);
-        Bank bank = bankRepository.findById(request.bankId()).orElseThrow(() -> {
-            CommonErrorCode ec = CommonErrorCode.BANK_NOT_EXIST;
-            return new BusinessValidationException(ec.getCode(),ec.getMessageKey(),ec.getStatus());
-        });
-        entity.setBank(bank);
+
+        if(request.bankId() != null){
+            Bank bank = bankRepository.findById(request.bankId()).orElseThrow(() -> {
+                CommonErrorCode ec = CommonErrorCode.BANK_NOT_EXIST;
+                return new BusinessValidationException(ec.getCode(),messageResolver.getMessage(ec.getMessageKey()),
+                        ec.getStatus());
+            });
+            entity.setBank(bank);
+        }
+
+        // TODO: implement proper implementation by JWT
+        entity.setAppUserId(1L);
 
         Asset saved = assetRepository.save(entity);
 

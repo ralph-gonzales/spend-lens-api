@@ -26,4 +26,9 @@ public interface AssetMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "appUserId", ignore = true)
     void overwriteFromDto(AssetRequestDto dto, @MappingTarget Asset entity);
+
+    @Named("assetTypeEnumToDto")
+    static AssetTypeDto assetTypeEnumToDto(AssetType type){
+        return (type == null) ? null : new AssetTypeDto(type.code(), type.label());
+    }
 }

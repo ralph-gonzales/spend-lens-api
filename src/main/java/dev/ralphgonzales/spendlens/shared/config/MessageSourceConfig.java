@@ -12,8 +12,8 @@ public class MessageSourceConfig {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames(
-                "classpath:messages/ValidationMessages",
-                "classpath:messages/SuccessMessages"
+                "classpath:ValidationMessages",
+                "classpath:SuccessMessages"
         );
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;

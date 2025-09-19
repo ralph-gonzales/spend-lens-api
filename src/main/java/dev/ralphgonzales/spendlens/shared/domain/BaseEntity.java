@@ -3,14 +3,13 @@ package dev.ralphgonzales.spendlens.shared.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
-import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @FieldNameConstants
 @MappedSuperclass
@@ -27,13 +26,13 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private OffsetDateTime createdDate;
+    private Instant createdDate;
 
     @LastModifiedBy
     private Long lastModifiedBy;
 
     @LastModifiedDate
-    private OffsetDateTime lastModifiedDate;
+    private Instant lastModifiedDate;
 
     public void deactivate() {
         this.isActive = false;

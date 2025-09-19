@@ -41,19 +41,42 @@ public class AssetValidator implements BusinessValidator<AssetRequestDto, Asset>
     }
 
     private void validateUniqueness(AssetRequestDto request, boolean isUpdate, Asset existing){
-        LocalDate startDate = request.assetDate().with(TemporalAdjusters.firstDayOfMonth());
         CommonErrorCode error = CommonErrorCode.ASSET_DB_RECORD_DUPLICATE;
 
-        Specification<Asset> spec = (root, query, cb) -> cb.conjunction();
+        // TODO: Replace with proper implementation for userId
+        Long appUserId = 1L;
+        String assetType = request.assetType() != null ? request.assetType() : existing.getAssetType().code();
+        LocalDate startDate = (request.assetDate() != null
+                ? request.assetDate()
+                : existing.getAssetMonth()
+        ).with(TemporalAdjusters.firstDayOfMonth());
+        Long bankId = null;
 
+        if(Objects.equals(AssetType.BANK.code(), assetType)){
+            bankId = request.bankId() != null ? request.bankId() : existing.getBankId();
+        }
+
+        if(isUpdate && Objects.equals(appUserId, existing.getAppUserId())
+            && Objects.equals(assetType, existing.getAssetType().code())
+            && Objects.equals(startDate, existing.getAssetMonth())
+            && Objects.equals(bankId, existing.getBankId())){
+            return;
+        }
+
+        Specification<Asset> spec = (root, query, cb) -> cb.conjunction();
         spec = spec
-                .and(AssetSpecification.isUserIdEqual(request.userId()))
+                .and(AssetSpecification.isUserIdEqual(appUserId))
                 .and(AssetSpecification.isAssetMonthEquals(startDate))
-                .and(AssetSpecification.isAssetTypeEquals(request.assetType()))
+                .and(AssetSpecification.isAssetTypeEquals(assetType))
                 .and(AssetSpecification.isActive());
 
-        if(Objects.equals(AssetType.BANK.code(), request.assetType())){
-            spec = spec.and(AssetSpecification.isBankIdEquals(request.bankId()));
+        if(Objects.equals(AssetType.BANK.code(), assetType)){
+            spec = spec.and(AssetSpecification.isBankIdEquals(bankId));
+        }else{
+            spec = spec.and(AssetSpecification.isBankIdNull());
+        }
+        if(isUpdate){
+            spec = spec.and(Specification.not(AssetSpecification.isIdEquals(existing.getId())));
         }
 
         boolean exists = assetRepository.exists(spec);
@@ -71,7 +94,7 @@ public class AssetValidator implements BusinessValidator<AssetRequestDto, Asset>
             Set<Long> bankIds = bankService.getAllActiveBanks();
             boolean isValid = bankIds.contains(request.bankId());
 
-            if(isValid){
+            if(!isValid){
                 throw new BusinessValidationException(error.getCode(),
                         messageResolver.getMessage(error.getMessageKey()),
                         error.getStatus());

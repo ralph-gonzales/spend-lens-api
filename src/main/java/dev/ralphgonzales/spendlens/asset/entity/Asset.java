@@ -50,7 +50,10 @@ public class Asset extends VersionedEntity {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @Column(nullable = false,precision = 10, scale = 2)
+    @Column(name = "bank_id", insertable = false, updatable = false)
+    private Long bankId;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @PrePersist
