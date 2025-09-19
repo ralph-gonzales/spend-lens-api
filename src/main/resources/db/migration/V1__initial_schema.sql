@@ -212,7 +212,8 @@ CREATE SEQUENCE spend_lens.app_user_asset_id_seq
     NO CYCLE;
 
 CREATE TABLE spend_lens.app_user_asset (
-    id BIGSERIAL,
+    id BIGINT DEFAULT nextval('spend_lens.app_user_asset_id_seq'),
+    uuid UUID NOT NULL DEFAULT gen_random_uuid(),
     asset_date date NOT NULL,
     asset_month date GENERATED ALWAYS AS (
             date_trunc('month', asset_date::timestamp)::date
@@ -237,7 +238,9 @@ CREATE TABLE spend_lens.app_user_asset (
     CONSTRAINT ck_app_user_asset__amount_valid
         CHECK (amount >= 0),
     CONSTRAINT ck_app_user_asset__amount_decimal_valid
-        CHECK (amount = ROUND(amount, 2))
+        CHECK (amount = ROUND(amount, 2)),
+    CONSTRAINT uq_app_user_asset__uuid
+        UNIQUE (uuid)
 );
 
 CREATE UNIQUE INDEX uq_asset__user__month__type__bank__active_only

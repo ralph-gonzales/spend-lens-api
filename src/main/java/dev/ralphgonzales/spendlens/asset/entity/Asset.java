@@ -11,6 +11,7 @@ import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @FieldNameConstants
 @Getter
@@ -33,6 +34,9 @@ public class Asset extends VersionedEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "asset_seq")
     private Long id;
 
+    @Column(nullable = false, updatable = false, unique = true, columnDefinition = "uuid")
+    private UUID uuid;
+
     @Column(nullable = false)
     private LocalDate assetDate;
 
@@ -48,4 +52,24 @@ public class Asset extends VersionedEntity {
 
     @Column(nullable = false,precision = 10, scale = 2)
     private BigDecimal amount;
+
+    @PrePersist
+    void prePersist(){
+        if(uuid == null) uuid = UUID.randomUUID();
+    }
+
+    @Override
+    public final boolean equals(Object o){
+        if(this == o) return true;
+        if (o == null) return false;
+        if(getClass() != o.getClass()) return false;
+
+        Asset that = (Asset) o;
+        return uuid != null && uuid.equals(that.uuid);
+    }
+
+    @Override
+    public final int hashCode(){
+        return (uuid != null) ? uuid.hashCode() : 0;
+    }
 }
