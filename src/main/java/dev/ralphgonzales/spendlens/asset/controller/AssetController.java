@@ -10,7 +10,6 @@ import dev.ralphgonzales.spendlens.shared.i18n.MessageResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -52,5 +51,18 @@ public class AssetController {
                 .toUri();
 
         return ResponseEntity.created(location).body(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<AssetResponseDto>> update(@RequestBody AssetRequestDto request, @PathVariable Long id){
+        CommonSuccessCode successCode = CommonSuccessCode.RESOURCE_UPDATED;
+        AssetResponseDto saved = assetService.update(request,id);
+        ApiResponse<AssetResponseDto> response = new ApiResponse<>(
+                successCode.getCode(),
+                messageResolver.getMessage(successCode.getMessageKey()),
+                saved
+        );
+
+        return ResponseEntity.status(successCode.getStatus()).body(response);
     }
 }

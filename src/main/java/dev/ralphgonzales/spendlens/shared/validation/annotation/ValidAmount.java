@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@NotNull(message = "{common.amount.required}")
+@NotNull(groups = ValidationGroups.Create.class, message = "{common.amount.required}")
 @DecimalMin(value= "0.0", message = "{common.amount.min}")
 @Digits(integer= 10, fraction = 2, message = "{common.amount.digits}")
 public @interface ValidAmount {

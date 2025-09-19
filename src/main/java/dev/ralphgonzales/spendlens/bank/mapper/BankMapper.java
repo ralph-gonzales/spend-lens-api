@@ -3,6 +3,8 @@ package dev.ralphgonzales.spendlens.bank.mapper;
 import dev.ralphgonzales.spendlens.bank.dto.BankRequestDto;
 import dev.ralphgonzales.spendlens.bank.dto.BankSummaryDto;
 import dev.ralphgonzales.spendlens.bank.entity.Bank;
+import dev.ralphgonzales.spendlens.bank.service.BankService;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
@@ -15,5 +17,7 @@ public interface BankMapper {
     List<BankRequestDto> toDtos(List<Bank> entities);
 
     @Named("toBankSummary")
-    BankSummaryDto toSummary(Bank bank);
+    static BankSummaryDto toBankSummary(Long bankId, @Context BankService bankService){
+        return (bankId == null) ? null : bankService.getSummaryById(bankId);
+    }
 }

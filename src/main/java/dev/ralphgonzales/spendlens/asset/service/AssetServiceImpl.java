@@ -49,11 +49,11 @@ public class AssetServiceImpl implements AssetService {
 
     @Transactional
     @Override
-    @Validated(ValidationGroups.Update.class)
+    @Validated(ValidationGroups.UpdateWithDefault.class)
     public AssetResponseDto update(@Valid AssetRequestDto request, Long id) {
         Asset existing = assetRepository.findById(id).orElseThrow(() -> {
             CommonErrorCode ec = CommonErrorCode.ASSET_NOT_EXIST;
-            return new BusinessValidationException(ec.getCode(), ec.getMessageKey(),
+            return new BusinessValidationException(ec.getCode(), messageResolver.getMessage(ec.getMessageKey()),
                     ec.getStatus());
         });
 
@@ -61,7 +61,9 @@ public class AssetServiceImpl implements AssetService {
 
         mapper.overwriteFromDto(request, existing);
 
-        return mapper.toResponse(existing);
+        assetRepository.saveAndFlush(existing);
+
+        return mapper.toResponse(existing, bankService);
     }
 
     @Override

@@ -9,13 +9,13 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@ValidBank
+@ValidBank(groups = ValidationGroups.Create.class)
 public record AssetRequestDto(
-        @NotNull(message="{asset.assetDate.required}")
+        @NotNull(groups = ValidationGroups.Create.class, message="{asset.assetDate.required}")
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate assetDate,
 
-        @NotNull(message="{asset.assetTypeCode.required}")
+        @NotNull(groups = ValidationGroups.Create.class, message="{asset.assetTypeCode.required}")
         @Size(max=10, message = "{asset.assetTypeCode.length}")
         String assetType,
 
@@ -23,9 +23,6 @@ public record AssetRequestDto(
 
         @ValidAmount
         BigDecimal amount,
-
-        @NotNull(message="{common.userId.required}")
-        Long userId,
 
         @NotNull(groups = ValidationGroups.Update.class, message = "{common.version.required}")
         @Positive(groups = ValidationGroups.Update.class, message = "{common.version.positive}")

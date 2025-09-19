@@ -3,6 +3,9 @@ package dev.ralphgonzales.spendlens.shared.enums;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 @AllArgsConstructor
 public enum CommonErrorCode implements BaseResponseCode {
     // Asset
@@ -41,5 +44,11 @@ public enum CommonErrorCode implements BaseResponseCode {
     @Override
     public HttpStatus getStatus() {
         return status;
+    }
+
+    public static Optional<CommonErrorCode> fromCode(String code){
+        return Arrays.stream(values())
+                .filter(e->e.code.equals(code))
+                .findFirst();
     }
 }
